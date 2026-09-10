@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NaruMonitor | Real-Time Air Quality Monitoring</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: "#166534",
+                        emerald: "#059669",
+                        teal: "#0F766E",
+                        sky: "#0284C7",
+                        mint: "#ECFDF5",
+                        air: "#F0FDFA"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-emerald-50/30 text-slate-800">
+
+<!--  HEADER / NAVIGATION -->
+
+<header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50">
+
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <!-- LOGO -->
+        <a href="#" class="flex items-center gap-3">
+
+            <div class="w-11 h-11 rounded-xl bg-emerald-700
+                        flex items-center justify-center">
+
+                <i data-lucide="wind"
+                   class="text-white w-6 h-6"></i>
+
+            </div>
+
+            <div>
+                <h1 class="text-xl font-bold text-slate-900">
+                    Naru<span class="text-emerald-700">Monitor</span>
+                </h1>
+
+                <p class="text-xs text-slate-500">
+                    Real-Time Air Intelligence
+                </p>
+            </div>
+
+        </a>
+
+        <!-- DESKTOP NAVIGATION -->
+
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+
+            <a href="#home"
+               class="hover:text-emerald-700 transition">
+                Home
+            </a>
+
+            <a href="#monitor"
+               class="hover:text-emerald-700 transition">
+                Live AQI
+            </a>
+
+            <a href="#prediction"
+               class="hover:text-emerald-700 transition">
+                AI Prediction
+            </a>
+
+            <a href="#pollutants"
+               class="hover:text-emerald-700 transition">
+                Monitoring
+            </a>
+
+            <a href="#insights"
+               class="hover:text-emerald-700 transition">
+                Insights
+            </a>
+
+            <a href="#about"
+               class="hover:text-emerald-700 transition">
+                About
+            </a>
+
+        </div>
+
+        <!-- CTA -->
+
+        <a href="#monitor"
+           class="hidden md:flex items-center gap-2
+                  bg-emerald-700 text-white px-5 py-2.5
+                  rounded-full font-semibold
+                  hover:bg-emerald-800 transition">
+
+            <i data-lucide="activity" class="w-4 h-4"></i>
+
+            View Live Data
+
+        </a>
+
+    </nav>
+
+</header>
+
+<!--MAIN-->
+
+<main>
+
+<!--  HERO SECTION -->
+
+<section id="home"
+         class="relative overflow-hidden
+                bg-gradient-to-br from-slate-950
+                via-emerald-950 to-teal-950
+                text-white">
+
+    <!-- Background decoration -->
+
+    <div class="absolute -top-32 -right-32
+                w-96 h-96 rounded-full
+                bg-emerald-500/15 blur-3xl">
+    </div>
+
+    <div class="absolute bottom-0 -left-32
+                w-96 h-96 rounded-full
+                bg-sky-500/10 blur-3xl">
+    </div>
+
+    <div class="relative max-w-7xl mx-auto
+                px-6 py-24 lg:py-32
+                grid lg:grid-cols-2 gap-16
+                items-center">
+
+        <!-- HERO CONTENT -->
+
+        <div>
+
+            <div class="inline-flex items-center gap-2
+                        px-4 py-2 rounded-full
+                        bg-white/10 border border-white/10
+                        text-emerald-300 text-sm mb-6">
+
+                <span class="w-2 h-2 bg-green-400
+                             rounded-full animate-pulse">
+                </span>
+
+                Monitoring air quality in real time
+
+            </div>
+
+            <h2 class="text-5xl lg:text-6xl
+                       font-extrabold leading-tight">
+
+                Breathe Smarter.
+
+                <span class="text-emerald-400">
+                    Monitor Better.
+                </span>
+
+            </h2>
+
+            <p class="mt-6 text-lg text-slate-300
+                      max-w-xl leading-relaxed">
+
+                NaruMonitor helps you understand the air
+                around you with real-time AQI data,
+                pollutant monitoring and intelligent
+                air-quality insights.
+
+            </p>
+
+            <!-- BUTTONS -->
+
+            <div class="mt-8 flex flex-wrap gap-4">
+
+                <a href="#monitor"
+                   class="px-6 py-3.5 rounded-full
+                          bg-emerald-600 text-white
+                          font-semibold
+                          hover:bg-emerald-500 transition
+                          flex items-center gap-2">
+
+                    Explore Live AQI
+
+                    <i data-lucide="arrow-right"
+                       class="w-5 h-5"></i>
+
+                </a>
+
+                <a href="#prediction"
+                   class="px-6 py-3.5 rounded-full
+                          border border-white/20
+                          hover:bg-white/10 transition">
+
+                    Predict AQI
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- HERO AQI CARD -->
+
+        <div class="relative">
+
+            <div class="bg-white/10 backdrop-blur-xl
+                        border border-white/10
+                        rounded-3xl p-7 shadow-2xl">
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-slate-300 text-sm">
+                            Current AQI
+                        </p>
+
+                        <h3 class="text-6xl font-bold mt-2">
+                            72
+                        </h3>
+
+                    </div>
+
+                    <div class="w-16 h-16
+                                rounded-2xl
+                                bg-amber-400/20
+                                flex items-center justify-center">
+
+                        <i data-lucide="cloud-sun"
+                           class="w-9 h-9 text-amber-300">
+                        </i>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-5">
+
+                    <span class="inline-block
+                                 px-4 py-1.5
+                                 rounded-full
+                                 bg-amber-400/20
+                                 text-amber-300
+                                 text-sm font-semibold">
+
+                        Moderate
+
+                    </span>
+
+                </div>
+
+                <!-- AQI BAR -->
+
+                <div class="mt-8">
+
+                    <div class="h-3 rounded-full
+                                bg-gradient-to-r
+                                from-emerald-400
+                                via-yellow-400
+                                via-orange-400
+                                to-red-500
+                                relative">
+
+                        <div class="absolute
+                                    top-1/2 -translate-y-1/2
+                                    left-[42%]
+                                    w-6 h-6
+                                    bg-white
+                                    border-4 border-emerald-500
+                                    rounded-full shadow-lg">
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-between
+                                text-xs text-slate-400 mt-3">
+
+                        <span>Good</span>
+                        <span>Moderate</span>
+                        <span>Unhealthy</span>
+                        <span>Hazardous</span>
+
+                    </div>
+
+                </div>
+
+                <!-- LOCATION -->
+
+                <div class="mt-7 pt-6
+                            border-t border-white/10
+                            flex justify-between">
+
+                    <div class="flex items-center gap-2">
+
+                        <i data-lucide="map-pin"
+                           class="w-4 h-4 text-emerald-400">
+                        </i>
+
+                        Bengaluru
+
+                    </div>
+
+                    <span class="text-sm text-slate-400">
+                        Updated 2 min ago
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- LIVE MONITORING -->
+
+<section id="monitor"
+         class="py-20 bg-white">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center max-w-2xl mx-auto">
+
+            <span class="text-emerald-700 font-semibold">
+                LIVE MONITORING
+            </span>
+
+            <h2 class="text-4xl font-bold
+                       text-slate-900 mt-2">
+
+                Know Your Air in Real Time
+
+            </h2>
+
+            <p class="mt-4 text-slate-600">
+
+                Track the current air quality of your
+                location and make informed decisions
+                about your day.
+
+            </p>
+
+        </div>
+
+        <!-- LOCATION SEARCH -->
+
+        <div class="max-w-xl mx-auto mt-10">
+
+            <div class="flex items-center
+                        bg-emerald-50 rounded-full
+                        px-5 py-3 border border-emerald-100">
+
+                <i data-lucide="search"
+                   class="w-5 h-5 text-slate-400">
+                </i>
+
+                <input
+                    type="text"
+                    placeholder="Search city or location..."
+                    class="bg-transparent outline-none
+                           flex-1 px-3">
+
+                <button
+                    class="bg-emerald-700 text-white
+                           px-5 py-2 rounded-full
+                           hover:bg-emerald-800">
+
+                    Search
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- CITY CARDS -->
+
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+
+            <!-- BENGALURU -->
+
+            <article class="bg-emerald-50
+                            rounded-2xl p-6
+                            border border-emerald-100
+                            hover:-translate-y-1
+                            transition">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-slate-500">
+                            Bengaluru
+                        </p>
+
+                        <h3 class="text-3xl
+                                   font-bold mt-2">
+                            72
+                        </h3>
+
+                    </div>
+
+                    <span class="px-3 py-1 h-fit
+                                 rounded-full
+                                 bg-yellow-100
+                                 text-yellow-700
+                                 text-xs font-semibold">
+
+                        Moderate
+
+                    </span>
+
+                </div>
+
+                <div class="mt-6
+                            flex justify-between
+                            text-sm text-slate-500">
+
+                    <span>PM2.5</span>
+
+                    <span class="font-semibold text-slate-800">
+                        24 µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+            <!-- MUMBAI -->
+
+            <article class="bg-emerald-50
+                            rounded-2xl p-6
+                            border border-emerald-100
+                            hover:-translate-y-1
+                            transition">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-slate-500">
+                            Mumbai
+                        </p>
+
+                        <h3 class="text-3xl
+                                   font-bold mt-2">
+                            54
+                        </h3>
+
+                    </div>
+
+                    <span class="px-3 py-1 h-fit
+                                 rounded-full
+                                 bg-green-100
+                                 text-green-700
+                                 text-xs font-semibold">
+
+                        Good
+
+                    </span>
+
+                </div>
+
+                <div class="mt-6
+                            flex justify-between
+                            text-sm text-slate-500">
+
+                    <span>PM2.5</span>
+
+                    <span class="font-semibold text-slate-800">
+                        16 µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+            <!-- DELHI -->
+
+            <article class="bg-emerald-50
+                            rounded-2xl p-6
+                            border border-emerald-100
+                            hover:-translate-y-1
+                            transition">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-slate-500">
+                            Delhi
+                        </p>
+
+                        <h3 class="text-3xl
+                                   font-bold mt-2">
+                            156
+                        </h3>
+
+                    </div>
+
+                    <span class="px-3 py-1 h-fit
+                                 rounded-full
+                                 bg-red-100
+                                 text-red-700
+                                 text-xs font-semibold">
+
+                        Unhealthy
+
+                    </span>
+
+                </div>
+
+                <div class="mt-6
+                            flex justify-between
+                            text-sm text-slate-500">
+
+                    <span>PM2.5</span>
+
+                    <span class="font-semibold text-slate-800">
+                        89 µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- AI AQI PREDICTION-->
+
+<section id="prediction"
+         class="py-20
+                bg-gradient-to-b
+                from-emerald-50
+                via-white
+                to-sky-50">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <!-- SECTION HEADING -->
+
+        <div class="text-center max-w-3xl mx-auto">
+
+            <span class="text-emerald-700
+                         font-bold tracking-wide">
+
+                AI AIR QUALITY PREDICTION
+
+            </span>
+
+            <h2 class="text-4xl
+                       font-extrabold
+                       text-slate-900 mt-2">
+
+                Predict AQI Before It Peaks
+
+            </h2>
+
+            <p class="mt-4 text-slate-600">
+
+                Adjust pollutant readings to estimate the
+                AQI and classify the expected air quality.
+
+            </p>
+
+        </div>
+
+        <div class="grid lg:grid-cols-2
+                    gap-8 mt-12">
+
+            <!-- INPUT CARD -->
+
+            <article class="bg-white
+                            rounded-3xl p-7
+                            border border-emerald-100
+                            shadow-lg">
+
+                <div class="flex items-center gap-3 mb-7">
+
+                    <div class="w-12 h-12
+                                rounded-2xl
+                                bg-emerald-100
+                                flex items-center
+                                justify-center">
+
+                        <i data-lucide="sliders-horizontal"
+                           class="w-6 h-6
+                                  text-emerald-700">
+                        </i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-xl
+                                   font-bold
+                                   text-slate-900">
+
+                            Pollutant Inputs
+
+                        </h3>
+
+                        <p class="text-sm text-slate-500">
+                            Adjust the readings to test a scenario
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="space-y-6">
+
+                    <!-- PM2.5 -->
+
+                    <div>
+
+                        <div class="flex justify-between
+                                    text-sm mb-2">
+
+                            <label class="font-semibold
+                                          text-slate-700">
+
+                                PM2.5
+
+                            </label>
+
+                            <span id="pm25Value"
+                                  class="font-bold
+                                         text-emerald-700">
+
+                                35 µg/m³
+
+                            </span>
+
+                        </div>
+
+                        <input
+                            id="pm25"
+                            type="range"
+                            min="0"
+                            max="250"
+                            value="35"
+                            class="w-full accent-emerald-600">
+
+                    </div>
+
+                    <!-- PM10 -->
+
+                    <div>
+
+                        <div class="flex justify-between
+                                    text-sm mb-2">
+
+                            <label class="font-semibold
+                                          text-slate-700">
+
+                                PM10
+
+                            </label>
+
+                            <span id="pm10Value"
+                                  class="font-bold text-sky-700">
+
+                                60 µg/m³
+
+                            </span>
+
+                        </div>
+
+                        <input
+                            id="pm10"
+                            type="range"
+                            min="0"
+                            max="350"
+                            value="60"
+                            class="w-full accent-sky-600">
+
+                    </div>
+
+                    <!-- NO2 -->
+
+                    <div>
+
+                        <div class="flex justify-between
+                                    text-sm mb-2">
+
+                            <label class="font-semibold
+                                          text-slate-700">
+
+                                NO₂
+
+                            </label>
+
+                            <span id="no2Value"
+                                  class="font-bold text-amber-700">
+
+                                25 µg/m³
+
+                            </span>
+
+                        </div>
+
+                        <input
+                            id="no2"
+                            type="range"
+                            min="0"
+                            max="250"
+                            value="25"
+                            class="w-full accent-amber-500">
+
+                    </div>
+
+                    <!-- O3 -->
+
+                    <div>
+
+                        <div class="flex justify-between
+                                    text-sm mb-2">
+
+                            <label class="font-semibold
+                                          text-slate-700">
+
+                                O₃
+
+                            </label>
+
+                            <span id="o3Value"
+                                  class="font-bold text-cyan-700">
+
+                                40 µg/m³
+
+                            </span>
+
+                        </div>
+
+                        <input
+                            id="o3"
+                            type="range"
+                            min="0"
+                            max="250"
+                            value="40"
+                            class="w-full accent-cyan-600">
+
+                    </div>
+
+                </div>
+
+                <button
+                    onclick="predictAQI()"
+                    class="mt-8 w-full
+                           bg-emerald-700
+                           text-white py-3.5
+                           rounded-xl
+                           font-bold
+                           hover:bg-emerald-800
+                           transition
+                           flex items-center
+                           justify-center gap-2">
+
+                    <i data-lucide="brain-circuit"
+                       class="w-5 h-5">
+                    </i>
+
+                    Predict AQI
+
+                </button>
+
+            </article>
+
+            <!-- RESULT CARD -->
+
+            <article class="relative overflow-hidden
+                            bg-slate-950
+                            rounded-3xl p-8
+                            text-white shadow-xl">
+
+                <div class="absolute
+                            -top-20 -right-20
+                            w-64 h-64
+                            rounded-full
+                            bg-emerald-500/15
+                            blur-3xl">
+                </div>
+
+                <div class="absolute
+                            -bottom-20 -left-20
+                            w-64 h-64
+                            rounded-full
+                            bg-sky-500/15
+                            blur-3xl">
+                </div>
+
+                <div class="relative">
+
+                    <div class="flex items-center
+                                justify-between">
+
+                        <div>
+
+                            <p class="text-slate-400
+                                      text-sm font-medium">
+
+                                Predicted AQI
+
+                            </p>
+
+                            <div id="predictedAQI"
+                                 class="text-7xl
+                                        font-extrabold mt-2">
+
+                                72
+
+                            </div>
+
+                        </div>
+
+                        <div id="predictionIcon"
+                             class="w-16 h-16
+                                    rounded-2xl
+                                    bg-amber-400/15
+                                    flex items-center
+                                    justify-center">
+
+                            <i data-lucide="cloud-sun"
+                               class="w-8 h-8
+                                      text-amber-300">
+                            </i>
+
+                        </div>
+
+                    </div>
+
+                    <!-- CLASSIFICATION -->
+
+                    <div class="mt-6">
+
+                        <span id="predictionClass"
+                              class="inline-flex
+                                     px-4 py-2
+                                     rounded-full
+                                     bg-amber-400/15
+                                     text-amber-300
+                                     font-bold text-sm">
+
+                            Moderate
+
+                        </span>
+
+                    </div>
+
+                    <!-- AQI SCALE -->
+
+                    <div class="mt-8">
+
+                        <div class="h-4
+                                    rounded-full
+                                    bg-gradient-to-r
+                                    from-emerald-400
+                                    via-amber-400
+                                    via-orange-500
+                                    via-red-500
+                                    to-purple-700">
+                        </div>
+
+                        <div class="grid grid-cols-5
+                                    text-xs
+                                    text-slate-400 mt-3">
+
+                            <span>Good</span>
+
+                            <span class="text-center">
+                                Moderate
+                            </span>
+
+                            <span class="text-center">
+                                Unhealthy
+                            </span>
+
+                            <span class="text-center">
+                                Very Unhealthy
+                            </span>
+
+                            <span class="text-right">
+                                Hazardous
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- CLASSIFICATION DESCRIPTION -->
+
+                    <div class="mt-8 pt-6
+                                border-t
+                                border-white/10">
+
+                        <p class="text-sm
+                                  text-slate-300">
+
+                            <span class="font-semibold
+                                         text-white">
+
+                                Classification:
+
+                            </span>
+
+                            <span id="classificationText">
+
+                                Air quality is acceptable,
+                                but sensitive groups should
+                                take care.
+
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- POLLUTANT MONITORING -->
+
+<section id="pollutants"
+         class="py-20 bg-emerald-50">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="flex flex-col
+                    md:flex-row
+                    md:justify-between
+                    md:items-end gap-5">
+
+            <div>
+
+                <span class="text-emerald-700
+                             font-semibold">
+
+                    AIR QUALITY PARAMETERS
+
+                </span>
+
+                <h2 class="text-4xl
+                           font-bold
+                           text-slate-900 mt-2">
+
+                    What Are We Monitoring?
+
+                </h2>
+
+            </div>
+
+            <p class="text-slate-600
+                      max-w-md">
+
+                Monitor the major pollutants that
+                influence the quality of the air
+                around you.
+
+            </p>
+
+        </div>
+
+        <!-- POLLUTANT CARDS -->
+
+        <div class="grid sm:grid-cols-2
+                    lg:grid-cols-3
+                    gap-6 mt-10">
+
+            <!-- PM2.5 -->
+
+            <article class="bg-white
+                            rounded-2xl p-6
+                            shadow-sm
+                            border border-emerald-100">
+
+                <div class="flex justify-between">
+
+                    <div class="w-12 h-12
+                                rounded-xl
+                                bg-emerald-100
+                                flex items-center
+                                justify-center">
+
+                        <i data-lucide="wind"
+                           class="text-emerald-700">
+                        </i>
+
+                    </div>
+
+                    <span class="text-green-600
+                                 text-sm
+                                 font-semibold">
+
+                        Normal
+
+                    </span>
+
+                </div>
+
+                <h3 class="mt-6
+                           text-xl font-bold">
+
+                    PM2.5
+
+                </h3>
+
+                <p class="text-slate-500
+                          text-sm mt-1">
+
+                    Fine particulate matter
+
+                </p>
+
+                <div class="mt-5">
+
+                    <span class="text-3xl font-bold">
+                        24
+                    </span>
+
+                    <span class="text-slate-500">
+                        µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+            <!-- PM10 -->
+
+            <article class="bg-white
+                            rounded-2xl p-6
+                            shadow-sm
+                            border border-sky-100">
+
+                <div class="flex justify-between">
+
+                    <div class="w-12 h-12
+                                rounded-xl
+                                bg-sky-100
+                                flex items-center
+                                justify-center">
+
+                        <i data-lucide="cloud"
+                           class="text-sky-700">
+                        </i>
+
+                    </div>
+
+                    <span class="text-green-600
+                                 text-sm
+                                 font-semibold">
+
+                        Normal
+
+                    </span>
+
+                </div>
+
+                <h3 class="mt-6
+                           text-xl font-bold">
+
+                    PM10
+
+                </h3>
+
+                <p class="text-slate-500
+                          text-sm mt-1">
+
+                    Coarse particulate matter
+
+                </p>
+
+                <div class="mt-5">
+
+                    <span class="text-3xl font-bold">
+                        48
+                    </span>
+
+                    <span class="text-slate-500">
+                        µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+            <!-- CO -->
+
+            <article class="bg-white
+                            rounded-2xl p-6
+                            shadow-sm
+                            border border-purple-100">
+
+                <div class="w-12 h-12
+                            rounded-xl
+                            bg-purple-100
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="factory"
+                       class="text-purple-700">
+                    </i>
+
+                </div>
+
+                <h3 class="mt-6
+                           text-xl font-bold">
+
+                    CO
+
+                </h3>
+
+                <p class="text-slate-500
+                          text-sm mt-1">
+
+                    Carbon monoxide
+
+                </p>
+
+                <div class="mt-5">
+
+                    <span class="text-3xl font-bold">
+                        0.8
+                    </span>
+
+                    <span class="text-slate-500">
+                        mg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+            <!-- NO2 -->
+
+            <article class="bg-white
+                            rounded-2xl p-6
+                            shadow-sm
+                            border border-orange-100">
+
+                <div class="w-12 h-12
+                            rounded-xl
+                            bg-orange-100
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="car"
+                       class="text-orange-700">
+                    </i>
+
+                </div>
+
+                <h3 class="mt-6
+                           text-xl font-bold">
+
+                    NO₂
+
+                </h3>
+
+                <p class="text-slate-500
+                          text-sm mt-1">
+
+                    Nitrogen dioxide
+
+                </p>
+
+                <div class="mt-5">
+
+                    <span class="text-3xl font-bold">
+                        18
+                    </span>
+
+                    <span class="text-slate-500">
+                        µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+            <!-- SO2 -->
+
+            <article class="bg-white
+                            rounded-2xl p-6
+                            shadow-sm
+                            border border-yellow-100">
+
+                <div class="w-12 h-12
+                            rounded-xl
+                            bg-yellow-100
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="factory"
+                       class="text-yellow-700">
+                    </i>
+
+                </div>
+
+                <h3 class="mt-6
+                           text-xl font-bold">
+
+                    SO₂
+
+                </h3>
+
+                <p class="text-slate-500
+                          text-sm mt-1">
+
+                    Sulfur dioxide
+
+                </p>
+
+                <div class="mt-5">
+
+                    <span class="text-3xl font-bold">
+                        9
+                    </span>
+
+                    <span class="text-slate-500">
+                        µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+            <!-- O3 -->
+
+            <article class="bg-white
+                            rounded-2xl p-6
+                            shadow-sm
+                            border border-cyan-100">
+
+                <div class="w-12 h-12
+                            rounded-xl
+                            bg-cyan-100
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="sun"
+                       class="text-cyan-700">
+                    </i>
+
+                </div>
+
+                <h3 class="mt-6
+                           text-xl font-bold">
+
+                    O₃
+
+                </h3>
+
+                <p class="text-slate-500
+                          text-sm mt-1">
+
+                    Ground-level ozone
+
+                </p>
+
+                <div class="mt-5">
+
+                    <span class="text-3xl font-bold">
+                        32
+                    </span>
+
+                    <span class="text-slate-500">
+                        µg/m³
+                    </span>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     AQI SCALE
+===================================================== -->
+
+<section class="py-20 bg-white">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <!-- HEADING -->
+
+        <div class="text-center">
+
+            <span class="inline-block
+                         text-emerald-700
+                         font-bold
+                         tracking-wider
+                         text-sm">
+
+                UNDERSTAND AQI
+
+            </span>
+
+            <h2 class="text-4xl md:text-5xl
+                       font-extrabold
+                       text-slate-900
+                       mt-3">
+
+                How Healthy Is Your Air?
+
+            </h2>
+
+            <p class="text-slate-600
+                      mt-4
+                      max-w-2xl
+                      mx-auto
+                      text-lg">
+
+                The Air Quality Index helps you understand
+                pollution levels and their potential impact
+                on health.
+
+            </p>
+
+        </div>
+
+        <!-- AQI SCALE CARD -->
+
+        <div class="mt-12
+                    bg-slate-50
+                    rounded-3xl
+                    p-8 md:p-10
+                    border border-slate-200
+                    shadow-lg">
+
+            <!-- COLORED AQI BAR -->
+
+            <div class="relative">
+
+                <div class="h-8
+                            rounded-full
+                            overflow-hidden
+                            flex
+                            shadow-md">
+
+                    <!-- GOOD -->
+
+                    <div class="w-1/5 bg-green-500"></div>
+
+                    <!-- MODERATE -->
+
+                    <div class="w-1/5 bg-yellow-400"></div>
+
+                    <!-- UNHEALTHY -->
+
+                    <div class="w-1/5 bg-orange-500"></div>
+
+                    <!-- VERY UNHEALTHY -->
+
+                    <div class="w-1/5 bg-red-500"></div>
+
+                    <!-- HAZARDOUS -->
+
+                    <div class="w-1/5 bg-purple-700"></div>
+
+                </div>
+
+                <!-- CURRENT POSITION -->
+
+                <div class="absolute
+                            left-[35%]
+                            -top-2">
+
+                    <div class="w-12 h-12
+                                bg-white
+                                border-4
+                                border-slate-900
+                                rounded-full
+                                shadow-xl
+                                flex items-center
+                                justify-center">
+
+                        <span class="text-xs
+                                     font-extrabold
+                                     text-slate-900">
+
+                            72
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- AQI VALUES -->
+
+            <div class="grid grid-cols-5
+                        mt-8
+                        text-center
+                        gap-2">
+
+                <!-- GOOD -->
+
+                <div>
+
+                    <div class="w-10 h-10
+                                mx-auto
+                                rounded-full
+                                bg-green-500
+                                flex items-center
+                                justify-center
+                                text-white
+                                font-bold">
+
+                        1
+
+                    </div>
+
+                    <h3 class="mt-3
+                               font-bold
+                               text-green-700">
+
+                        Good
+
+                    </h3>
+
+                    <p class="text-sm
+                              text-slate-500
+                              mt-1">
+
+                        0–50
+
+                    </p>
+
+                </div>
+
+                <!-- MODERATE -->
+
+                <div>
+
+                    <div class="w-10 h-10
+                                mx-auto
+                                rounded-full
+                                bg-yellow-400
+                                flex items-center
+                                justify-center
+                                text-slate-900
+                                font-bold">
+
+                        2
+
+                    </div>
+
+                    <h3 class="mt-3
+                               font-bold
+                               text-yellow-700">
+
+                        Moderate
+
+                    </h3>
+
+                    <p class="text-sm
+                              text-slate-500
+                              mt-1">
+
+                        51–100
+
+                    </p>
+
+                </div>
+
+                <!-- UNHEALTHY -->
+
+                <div>
+
+                    <div class="w-10 h-10
+                                mx-auto
+                                rounded-full
+                                bg-orange-500
+                                flex items-center
+                                justify-center
+                                text-white
+                                font-bold">
+
+                        3
+
+                    </div>
+
+                    <h3 class="mt-3
+                               font-bold
+                               text-orange-600">
+
+                        Unhealthy
+
+                    </h3>
+
+                    <p class="text-sm
+                              text-slate-500
+                              mt-1">
+
+                        101–150
+
+                    </p>
+
+                </div>
+
+                <!-- VERY UNHEALTHY -->
+
+                <div>
+
+                    <div class="w-10 h-10
+                                mx-auto
+                                rounded-full
+                                bg-red-500
+                                flex items-center
+                                justify-center
+                                text-white
+                                font-bold">
+
+                        4
+
+                    </div>
+
+                    <h3 class="mt-3
+                               font-bold
+                               text-red-600">
+
+                        Very Unhealthy
+
+                    </h3>
+
+                    <p class="text-sm
+                              text-slate-500
+                              mt-1">
+
+                        151–200
+
+                    </p>
+
+                </div>
+
+                <!-- HAZARDOUS -->
+
+                <div>
+
+                    <div class="w-10 h-10
+                                mx-auto
+                                rounded-full
+                                bg-purple-700
+                                flex items-center
+                                justify-center
+                                text-white
+                                font-bold">
+
+                        5
+
+                    </div>
+
+                    <h3 class="mt-3
+                               font-bold
+                               text-purple-700">
+
+                        Hazardous
+
+                    </h3>
+
+                    <p class="text-sm
+                              text-slate-500
+                              mt-1">
+
+                        201+
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- CURRENT STATUS -->
+
+            <div class="mt-10
+                        bg-yellow-50
+                        border border-yellow-200
+                        rounded-2xl
+                        p-5
+                        flex items-center
+                        gap-4">
+
+                <div class="w-12 h-12
+                            rounded-full
+                            bg-yellow-400
+                            flex items-center
+                            justify-center
+                            flex-shrink-0">
+
+                    <i data-lucide="cloud-sun"
+                       class="w-6 h-6
+                              text-slate-900">
+                    </i>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-bold
+                               text-slate-900">
+
+                        Current AQI: 72 — Moderate
+
+                    </h3>
+
+                    <p class="text-sm
+                              text-slate-600
+                              mt-1">
+
+                        Air quality is acceptable, but
+                        unusually sensitive people may
+                        experience minor effects.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--ARTICLES / INSIGHTS -->
+
+<section id="insights"
+         class="py-20 bg-emerald-50">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center">
+
+            <span class="text-emerald-700
+                         font-semibold">
+
+                AIR QUALITY INSIGHTS
+
+            </span>
+
+            <h2 class="text-4xl font-bold mt-2">
+
+                Learn. Understand. Act.
+
+            </h2>
+
+        </div>
+
+        <div class="grid md:grid-cols-3
+                    gap-7 mt-12">
+
+            <!-- ARTICLE 1 -->
+
+            <article class="bg-white
+                            rounded-2xl
+                            overflow-hidden
+                            shadow-sm
+                            hover:shadow-lg
+                            transition">
+
+                <div class="h-40
+                            bg-gradient-to-br
+                            from-emerald-700
+                            to-teal-700
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="wind"
+                       class="w-16 h-16
+                              text-white/80">
+                    </i>
+
+                </div>
+
+                <div class="p-6">
+
+                    <span class="text-xs
+                                 font-semibold
+                                 text-emerald-700">
+
+                        AIR QUALITY 101
+
+                    </span>
+
+                    <h3 class="text-xl
+                               font-bold mt-2">
+
+                        Understanding PM2.5
+
+                    </h3>
+
+                    <p class="text-slate-600
+                              mt-3 text-sm
+                              leading-relaxed">
+
+                        Learn why tiny particulate
+                        matter can have a significant
+                        impact on air quality and
+                        human health.
+
+                    </p>
+
+                    <a href="#"
+                       class="inline-flex
+                              items-center gap-2
+                              mt-5
+                              text-emerald-700
+                              font-semibold">
+
+                        Read Article
+
+                        <i data-lucide="arrow-right"
+                           class="w-4 h-4">
+                        </i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+            <!-- ARTICLE 2 -->
+
+            <article class="bg-white
+                            rounded-2xl
+                            overflow-hidden
+                            shadow-sm
+                            hover:shadow-lg
+                            transition">
+
+                <div class="h-40
+                            bg-gradient-to-br
+                            from-sky-700
+                            to-cyan-700
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="heart-pulse"
+                       class="w-16 h-16
+                              text-white/80">
+                    </i>
+
+                </div>
+
+                <div class="p-6">
+
+                    <span class="text-xs
+                                 font-semibold
+                                 text-sky-700">
+
+                        HEALTH
+
+                    </span>
+
+                    <h3 class="text-xl
+                               font-bold mt-2">
+
+                        How AQI Affects Your Day
+
+                    </h3>
+
+                    <p class="text-slate-600
+                              mt-3 text-sm
+                              leading-relaxed">
+
+                        Discover how changing air
+                        quality can influence outdoor
+                        activities and everyday
+                        decisions.
+
+                    </p>
+
+                    <a href="#"
+                       class="inline-flex
+                              items-center gap-2
+                              mt-5
+                              text-sky-700
+                              font-semibold">
+
+                        Read Article
+
+                        <i data-lucide="arrow-right"
+                           class="w-4 h-4">
+                        </i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+            <!-- ARTICLE 3 -->
+
+            <article class="bg-white
+                            rounded-2xl
+                            overflow-hidden
+                            shadow-sm
+                            hover:shadow-lg
+                            transition">
+
+                <div class="h-40
+                            bg-gradient-to-br
+                            from-emerald-700
+                            to-green-700
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="leaf"
+                       class="w-16 h-16
+                              text-white/80">
+                    </i>
+
+                </div>
+
+                <div class="p-6">
+
+                    <span class="text-xs
+                                 font-semibold
+                                 text-emerald-700">
+
+                        SUSTAINABILITY
+
+                    </span>
+
+                    <h3 class="text-xl
+                               font-bold mt-2">
+
+                        5 Ways to Reduce Exposure
+
+                    </h3>
+
+                    <p class="text-slate-600
+                              mt-3 text-sm
+                              leading-relaxed">
+
+                        Simple ways to reduce your
+                        exposure to poor air quality
+                        and make healthier choices.
+
+                    </p>
+
+                    <a href="#"
+                       class="inline-flex
+                              items-center gap-2
+                              mt-5
+                              text-emerald-700
+                              font-semibold">
+
+                        Read Article
+
+                        <i data-lucide="arrow-right"
+                           class="w-4 h-4">
+                        </i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--CALL TO ACTION -->
+
+<section id="about"
+         class="py-20
+                bg-emerald-800
+                text-white">
+
+    <div class="max-w-5xl mx-auto
+                px-6 text-center">
+
+        <i data-lucide="wind"
+           class="w-12 h-12
+                  mx-auto
+                  text-emerald-200">
+        </i>
+
+        <h2 class="text-4xl
+                   md:text-5xl
+                   font-bold mt-5">
+
+            Know Your Air.
+            <br>
+            Make Better Decisions.
+
+        </h2>
+
+        <p class="text-emerald-100
+                  max-w-2xl mx-auto
+                  mt-5">
+
+            With NaruMonitor, air-quality information
+            becomes easier to understand, track and act
+            upon.
+
+        </p>
+
+        <a href="#prediction"
+           class="inline-flex
+                  items-center gap-2
+                  mt-8
+                  bg-white
+                  text-emerald-800
+                  px-7 py-3.5
+                  rounded-full
+                  font-bold
+                  hover:bg-emerald-50
+                  transition">
+
+            Try AI Prediction
+
+            <i data-lucide="arrow-right"
+               class="w-5 h-5">
+            </i>
+
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer class="bg-slate-950
+               text-slate-400">
+
+    <div class="max-w-7xl mx-auto
+                px-6 py-14
+                grid md:grid-cols-4
+                gap-10">
+
+        <!-- BRAND -->
+
+        <div class="md:col-span-2">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-10 h-10
+                            rounded-xl
+                            bg-emerald-700
+                            flex items-center
+                            justify-center">
+
+                    <i data-lucide="wind"
+                       class="text-white">
+                    </i>
+
+                </div>
+
+                <span class="text-xl
+                             font-bold
+                             text-white">
+
+                    Naru<span class="text-emerald-400">
+                        Monitor
+                    </span>
+
+                </span>
+
+            </div>
+
+            <p class="mt-5 max-w-md
+                      leading-relaxed">
+
+                Real-time air-quality intelligence
+                designed to help communities understand
+                pollution and make informed decisions.
+
+            </p>
+
+        </div>
+
+        <!-- LINKS -->
+
+        <div>
+
+            <h3 class="text-white
+                       font-semibold mb-4">
+
+                Platform
+
+            </h3>
+
+            <ul class="space-y-3 text-sm">
+
+                <li>
+                    <a href="#monitor"
+                       class="hover:text-emerald-400">
+                        Live AQI
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#prediction"
+                       class="hover:text-emerald-400">
+                        AI Prediction
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#pollutants"
+                       class="hover:text-emerald-400">
+                        Monitoring
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#insights"
+                       class="hover:text-emerald-400">
+                        Insights
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- RESOURCES -->
+
+        <div>
+
+            <h3 class="text-white
+                       font-semibold mb-4">
+
+                Resources
+
+            </h3>
+
+            <ul class="space-y-3 text-sm">
+
+                <li>
+                    <a href="#"
+                       class="hover:text-emerald-400">
+                        AQI Guide
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#"
+                       class="hover:text-emerald-400">
+                        Data Sources
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#"
+                       class="hover:text-emerald-400">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- COPYRIGHT -->
+
+    <div class="border-t border-white/10">
+
+        <div class="max-w-7xl mx-auto
+                    px-6 py-6
+                    flex flex-col md:flex-row
+                    justify-between
+                    gap-3 text-sm">
+
+            <p>
+                © 2026 NaruMonitor.
+                All rights reserved.
+            </p>
+
+            <p>
+                Real-time air quality monitoring platform
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!--AQI PREDICTION JAVASCRIPT -->
+
+<script>
+
+function classifyAQI(aqi) {
+
+    if (aqi <= 50) {
+
+        return {
+            label: "Good",
+            className: "bg-emerald-400/15 text-emerald-300",
+            text:
+                "Air quality is good and poses little or no health risk."
+        };
+
+    }
+
+    else if (aqi <= 100) {
+
+        return {
+            label: "Moderate",
+            className: "bg-amber-400/15 text-amber-300",
+            text:
+                "Air quality is acceptable, but sensitive groups should take care."
+        };
+
+    }
+
+    else if (aqi <= 150) {
+
+        return {
+            label: "Unhealthy for Sensitive Groups",
+            className: "bg-orange-400/15 text-orange-300",
+            text:
+                "Sensitive groups may experience health effects and should reduce prolonged exposure."
+        };
+
+    }
+
+    else if (aqi <= 200) {
+
+        return {
+            label: "Very Unhealthy",
+            className: "bg-red-400/15 text-red-300",
+            text:
+                "Health alert: everyone may experience more serious health effects."
+        };
+
+    }
+
+    else {
+
+        return {
+            label: "Hazardous",
+            className: "bg-purple-400/15 text-purple-300",
+            text:
+                "Health warning: emergency conditions are possible. Avoid prolonged outdoor exposure."
+        };
+
+    }
+
+}
+
+function predictAQI() {
+
+    const pm25 =
+        Number(document.getElementById("pm25").value);
+
+    const pm10 =
+        Number(document.getElementById("pm10").value);
+
+    const no2 =
+        Number(document.getElementById("no2").value);
+
+    const o3 =
+        Number(document.getElementById("o3").value);
+
+    /*
+       Demonstration AQI prediction formula.
+
+       In the final project, replace this section
+       with the prediction from your trained
+       machine-learning model or API.
+    */
+
+    const predicted = Math.round(
+
+        (pm25 * 1.45) +
+        (pm10 * 0.35) +
+        (no2 * 0.55) +
+        (o3 * 0.25)
+
+    );
+
+    const aqi =
+        Math.min(500, Math.max(0, predicted));
+
+    const result =
+        classifyAQI(aqi);
+
+    document.getElementById(
+        "predictedAQI"
+    ).textContent = aqi;
+
+    const badge =
+        document.getElementById(
+            "predictionClass"
+        );
+
+    badge.textContent =
+        result.label;
+
+    badge.className =
+        "inline-flex px-4 py-2 rounded-full font-bold text-sm "
+        + result.className;
+
+    document.getElementById(
+        "classificationText"
+    ).textContent =
+        result.text;
+
+}
+
+function updateSlider(
+    id,
+    outputId,
+    unit
+) {
+
+    const slider =
+        document.getElementById(id);
+
+    const output =
+        document.getElementById(outputId);
+
+    slider.addEventListener(
+        "input",
+        function () {
+
+            output.textContent =
+                this.value + " " + unit;
+
+            predictAQI();
+
+        }
+    );
+
+}
+
+updateSlider(
+    "pm25",
+    "pm25Value",
+    "µg/m³"
+);
+
+updateSlider(
+    "pm10",
+    "pm10Value",
+    "µg/m³"
+);
+
+updateSlider(
+    "no2",
+    "no2Value",
+    "µg/m³"
+);
+
+updateSlider(
+    "o3",
+    "o3Value",
+    "µg/m³"
+);
+
+/* Initial prediction */
+
+predictAQI();
+
+</script>
+
+<!--  INITIALIZE ICONS -->
+
+<script>
+
+lucide.createIcons();
+
+</script>
+
+</body>
+</html>
