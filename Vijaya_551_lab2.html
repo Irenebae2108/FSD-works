@@ -1,0 +1,2553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NaruMonitor | AI-Powered Air Quality Intelligence</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config={
+    theme:{
+        extend:{
+            colors:{
+                navy:"#0F172A",
+                teal:"#0F766E",
+                sky:"#0284C7",
+                mint:"#ECFDF5"
+            }
+        }
+    }
+}
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+html{scroll-behavior:smooth}
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f8fafc
+}
+
+.hero-bg{
+    background-image:
+    linear-gradient(
+        90deg,
+        rgba(2,6,23,.96),
+        rgba(15,23,42,.78),
+        rgba(15,118,110,.48)
+    ),
+    url("file:///C:/Users/Msi/Pictures/AI-driven%20Sustainability%20and%20Net%20Zero%20Carbon.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat
+}
+
+.tree-bg{
+    background-image:
+    linear-gradient(
+        rgba(6,78,59,.78),
+        rgba(15,23,42,.86)
+    ),
+    url("file:///C:/Users/Msi/Pictures/Green%20Tree%20is%20Under%20the%20Protection%20Stock%20Image%20-%20Image%20of%20clean%2C%20green_%207836087.jpg");
+    background-size:cover;
+    background-position:center
+}
+
+.ai-bg{
+    background-image:
+    linear-gradient(
+        rgba(15,23,42,.68),
+        rgba(15,118,110,.72)
+    ),
+    url("file:///C:/Users/Msi/Pictures/img1.jpg");
+    background-size:cover;
+    background-position:center
+}
+
+.glass{
+    background:rgba(255,255,255,.10);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.18)
+}
+
+.glass-dark{
+    background:rgba(15,23,42,.75);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.10)
+}
+
+.floating{
+    animation:floating 5s ease-in-out infinite
+}
+
+@keyframes floating{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+
+.glow{
+    box-shadow:0 0 50px rgba(20,184,166,.18)
+}
+
+.gradient-text{
+    background:linear-gradient(
+        90deg,
+        #5eead4,
+        #34d399,
+        #38bdf8
+    );
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent
+}
+
+.hover-card{
+    transition:all .3s ease
+}
+
+.hover-card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 20px 40px rgba(15,23,42,.12)
+}
+
+.aqi-gradient{
+    background:linear-gradient(
+        90deg,
+        #22c55e,
+        #eab308,
+        #f97316,
+        #ef4444,
+        #7f1d1d
+    )
+}
+
+.pulse{
+    animation:pulse 2s infinite
+}
+
+@keyframes pulse{
+    0%{
+        box-shadow:0 0 0 0 rgba(34,197,94,.5)
+    }
+    70%{
+        box-shadow:0 0 0 12px rgba(34,197,94,0)
+    }
+    100%{
+        box-shadow:0 0 0 0 rgba(34,197,94,0)
+    }
+}
+
+input[type="range"]{
+    accent-color:#0f766e
+}
+</style>
+</head>
+
+<body class="text-slate-800">
+
+<header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50">
+<nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+<a href="#home" class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-teal-700 flex items-center justify-center">
+<i data-lucide="wind" class="text-white w-6 h-6"></i>
+</div>
+
+<div>
+<h1 class="text-xl font-bold text-slate-900">
+Naru<span class="text-teal-700">Monitor</span>
+</h1>
+
+<p class="text-xs text-slate-500">
+AI-Powered Air Intelligence
+</p>
+</div>
+</a>
+
+<div class="hidden lg:flex items-center gap-7 text-sm font-medium">
+<a href="#home" class="hover:text-teal-700 transition">Home</a>
+<a href="#monitor" class="hover:text-teal-700 transition">Live AQI</a>
+<a href="#prediction" class="hover:text-teal-700 transition">AI Prediction</a>
+<a href="#pollutants" class="hover:text-teal-700 transition">Monitoring</a>
+<a href="#articles" class="hover:text-teal-700 transition">Articles</a>
+<a href="#about" class="hover:text-teal-700 transition">About</a>
+</div>
+
+<a href="#prediction"
+class="hidden md:flex items-center gap-2 bg-teal-700 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-teal-800 transition">
+
+<i data-lucide="brain" class="w-4 h-4"></i>
+AI Prediction
+
+</a>
+
+</nav>
+</header>
+
+
+<section id="home"
+class="hero-bg relative min-h-[720px] flex items-center text-white overflow-hidden">
+
+<div class="absolute -top-40 -right-40 w-[500px] h-[500px] bg-teal-400/20 rounded-full blur-3xl"></div>
+
+<div class="absolute bottom-0 -left-40 w-[450px] h-[450px] bg-sky-500/20 rounded-full blur-3xl"></div>
+
+<div class="relative max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center">
+
+<div>
+
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-teal-300 text-sm mb-6">
+
+<span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+
+AI-powered real-time air monitoring
+
+</div>
+
+<h2 class="text-5xl lg:text-7xl font-extrabold leading-tight">
+
+Breathe Smarter.
+
+<span class="gradient-text block">
+Predict Better.
+</span>
+
+</h2>
+
+<p class="mt-6 text-lg text-slate-200 max-w-xl leading-relaxed">
+
+NaruMonitor combines real-time AQI monitoring with machine learning predictions to understand present air quality and anticipate future conditions.
+
+</p>
+
+<div class="mt-8 flex flex-wrap gap-4">
+
+<a href="#monitor"
+class="px-6 py-3.5 rounded-full bg-teal-500 font-semibold hover:bg-teal-400 transition flex items-center gap-2">
+
+Explore Live AQI
+
+<i data-lucide="arrow-right" class="w-5 h-5"></i>
+
+</a>
+
+<a href="#prediction"
+class="px-6 py-3.5 rounded-full border border-white/30 bg-white/5 backdrop-blur-md hover:bg-white/10 transition">
+
+Try AI Prediction
+
+</a>
+
+</div>
+
+<div class="grid grid-cols-3 gap-5 mt-12 max-w-lg">
+
+<div>
+<p class="text-3xl font-bold">15+</p>
+<p class="text-sm text-slate-300">Pollutants</p>
+</div>
+
+<div>
+<p class="text-3xl font-bold">AI</p>
+<p class="text-sm text-slate-300">Predictions</p>
+</div>
+
+<div>
+<p class="text-3xl font-bold">24/7</p>
+<p class="text-sm text-slate-300">Monitoring</p>
+</div>
+
+</div>
+
+</div>
+
+
+<div id="monitor" class="relative">
+
+<div class="glass rounded-3xl p-7 shadow-2xl glow">
+
+<div class="flex justify-between items-center">
+
+<div>
+
+<p class="text-slate-300 text-sm">
+Current AQI
+</p>
+
+<h3 id="liveAQI"
+class="text-7xl font-bold mt-2">
+72
+</h3>
+
+</div>
+
+<div class="w-16 h-16 rounded-2xl bg-yellow-400/20 flex items-center justify-center">
+
+<i data-lucide="cloud-sun"
+class="w-9 h-9 text-yellow-300">
+</i>
+
+</div>
+
+</div>
+
+
+<div class="mt-5">
+
+<span id="liveCategory"
+class="inline-block px-4 py-1.5 rounded-full bg-yellow-400/20 text-yellow-300 text-sm font-semibold">
+
+Moderate
+
+</span>
+
+</div>
+
+
+<div class="mt-8">
+
+<div class="h-3 rounded-full aqi-gradient relative">
+
+<div id="aqiMarker"
+class="absolute top-1/2 -translate-y-1/2 left-[42%] w-6 h-6 bg-white border-4 border-teal-500 rounded-full shadow-lg">
+</div>
+
+</div>
+
+<div class="flex justify-between text-xs text-slate-300 mt-2">
+
+<span>Good</span>
+<span>Moderate</span>
+<span>Unhealthy</span>
+<span>Hazardous</span>
+
+</div>
+
+</div>
+
+
+<div class="grid grid-cols-3 gap-3 mt-8">
+
+<div class="bg-white/10 rounded-2xl p-4">
+
+<p class="text-xs text-slate-300">
+PM2.5
+</p>
+
+<p id="livePM25"
+class="text-xl font-bold mt-2">
+32
+</p>
+
+<p class="text-xs text-slate-400">
+µg/m³
+</p>
+
+</div>
+
+
+<div class="bg-white/10 rounded-2xl p-4">
+
+<p class="text-xs text-slate-300">
+PM10
+</p>
+
+<p id="livePM10"
+class="text-xl font-bold mt-2">
+58
+</p>
+
+<p class="text-xs text-slate-400">
+µg/m³
+</p>
+
+</div>
+
+
+<div class="bg-white/10 rounded-2xl p-4">
+
+<p class="text-xs text-slate-300">
+NO₂
+</p>
+
+<p id="liveNO2"
+class="text-xl font-bold mt-2">
+41
+</p>
+
+<p class="text-xs text-slate-400">
+µg/m³
+</p>
+
+</div>
+
+</div>
+
+
+<div class="mt-6 rounded-2xl bg-white/10 p-4">
+
+<div class="flex flex-col sm:flex-row gap-3">
+
+<input
+id="cityInput"
+type="text"
+value="New Delhi"
+placeholder="Enter city"
+class="flex-1 rounded-xl bg-white/10 border border-white/20 px-4 py-2 text-white placeholder:text-slate-400 outline-none">
+
+<button
+onclick="loadLiveAPIs()"
+class="rounded-xl bg-teal-500 hover:bg-teal-400 px-5 py-2 font-semibold text-white">
+
+Load Live Data
+
+</button>
+
+</div>
+
+<p id="apiStatus"
+class="text-xs text-slate-400 mt-3">
+
+Live API data will appear here.
+
+</p>
+
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3 text-sm">
+
+<div>
+<span class="text-slate-400">Temperature</span>
+<p id="weatherTemp" class="font-bold">--</p>
+</div>
+
+<div>
+<span class="text-slate-400">Humidity</span>
+<p id="weatherHumidity" class="font-bold">--</p>
+</div>
+
+<div>
+<span class="text-slate-400">Wind</span>
+<p id="weatherWind" class="font-bold">--</p>
+</div>
+
+<div>
+<span class="text-slate-400">NASA</span>
+<p id="nasaData" class="font-bold">--</p>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="mt-6 pt-5 border-t border-white/10 flex justify-between">
+
+<div class="flex items-center gap-2">
+
+<span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+
+<span class="text-sm text-slate-300">
+Live monitoring
+</span>
+
+</div>
+
+<span class="text-xs text-slate-400">
+Updated now
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="pollutants"
+class="py-24 bg-slate-50">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<div class="text-center max-w-2xl mx-auto">
+
+<span class="text-teal-700 font-semibold">
+LIVE POLLUTANT MONITORING
+</span>
+
+<h2 class="text-4xl font-bold mt-3 text-slate-900">
+Understand What You Breathe
+</h2>
+
+<p class="text-slate-600 mt-4">
+NaruMonitor tracks major pollutants and transforms raw environmental data into meaningful air-quality insights.
+</p>
+
+</div>
+
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+
+
+<div class="bg-white rounded-3xl p-7 shadow-sm hover-card">
+
+<div class="w-12 h-12 rounded-2xl bg-teal-100 flex items-center justify-center">
+<i data-lucide="cloud" class="text-teal-700"></i>
+</div>
+
+<h3 class="text-xl font-bold mt-5">
+PM2.5
+</h3>
+
+<p class="text-slate-600 mt-2">
+Fine particulate matter that can penetrate deep into the lungs.
+</p>
+
+<div class="mt-5 flex justify-between">
+
+<span class="text-sm text-slate-500">
+Current level
+</span>
+
+<span id="cardPM25" class="font-bold">
+32 µg/m³
+</span>
+
+</div>
+
+</div>
+
+
+<div class="bg-white rounded-3xl p-7 shadow-sm hover-card">
+
+<div class="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center">
+<i data-lucide="wind" class="text-sky-700"></i>
+</div>
+
+<h3 class="text-xl font-bold mt-5">
+PM10
+</h3>
+
+<p class="text-slate-600 mt-2">
+Larger particles commonly produced by dust, construction and traffic.
+</p>
+
+<div class="mt-5 flex justify-between">
+
+<span class="text-sm text-slate-500">
+Current level
+</span>
+
+<span id="cardPM10" class="font-bold">
+58 µg/m³
+</span>
+
+</div>
+
+</div>
+
+
+<div class="bg-white rounded-3xl p-7 shadow-sm hover-card">
+
+<div class="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center">
+<i data-lucide="factory" class="text-orange-600"></i>
+</div>
+
+<h3 class="text-xl font-bold mt-5">
+NO₂
+</h3>
+
+<p class="text-slate-600 mt-2">
+A pollutant strongly associated with vehicle traffic and combustion.
+</p>
+
+<div class="mt-5 flex justify-between">
+
+<span class="text-sm text-slate-500">
+Current level
+</span>
+
+<span id="cardNO2" class="font-bold">
+41 µg/m³
+</span>
+
+</div>
+
+</div>
+
+
+<div class="bg-white rounded-3xl p-7 shadow-sm hover-card">
+
+<div class="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
+<i data-lucide="factory" class="text-purple-700"></i>
+</div>
+
+<h3 class="text-xl font-bold mt-5">
+SO₂
+</h3>
+
+<p class="text-slate-600 mt-2">
+Produced mainly by industrial activities and fuel combustion.
+</p>
+
+<div class="mt-5 flex justify-between">
+
+<span class="text-sm text-slate-500">
+Pollutant
+</span>
+
+<span class="font-bold">
+Monitoring
+</span>
+
+</div>
+
+</div>
+
+
+<div class="bg-white rounded-3xl p-7 shadow-sm hover-card">
+
+<div class="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center">
+<i data-lucide="sun" class="text-green-700"></i>
+</div>
+
+<h3 class="text-xl font-bold mt-5">
+O₃
+</h3>
+
+<p class="text-slate-600 mt-2">
+Ground-level ozone formed through atmospheric chemical reactions.
+</p>
+
+<div class="mt-5 flex justify-between">
+
+<span class="text-sm text-slate-500">
+Pollutant
+</span>
+
+<span class="font-bold">
+Monitoring
+</span>
+
+</div>
+
+</div>
+
+
+<div class="bg-white rounded-3xl p-7 shadow-sm hover-card">
+
+<div class="w-12 h-12 rounded-2xl bg-red-100 flex items-center justify-center">
+<i data-lucide="car" class="text-red-700"></i>
+</div>
+
+<h3 class="text-xl font-bold mt-5">
+CO
+</h3>
+
+<p class="text-slate-600 mt-2">
+A colourless gas produced by incomplete combustion.
+</p>
+
+<div class="mt-5 flex justify-between">
+
+<span class="text-sm text-slate-500">
+Pollutant
+</span>
+
+<span class="font-bold">
+Monitoring
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="ai-bg py-28 text-white">
+
+<div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+<div>
+
+<span class="text-teal-300 font-semibold">
+FROM DATA TO DECISIONS
+</span>
+
+<h2 class="text-4xl lg:text-5xl font-bold mt-4">
+Turning Air Quality Data Into Action
+</h2>
+
+<p class="text-slate-200 mt-6 leading-relaxed text-lg">
+
+Air pollution is influenced by multiple interacting factors. NaruMonitor brings together environmental measurements and predictive intelligence to help users understand how these factors affect AQI.
+
+</p>
+
+<div class="grid sm:grid-cols-2 gap-5 mt-8">
+
+<div class="glass rounded-2xl p-5">
+
+<i data-lucide="database" class="text-teal-300"></i>
+
+<h3 class="font-bold text-lg mt-3">
+Real-Time Data
+</h3>
+
+<p class="text-slate-300 text-sm mt-2">
+Monitor current environmental conditions.
+</p>
+
+</div>
+
+
+<div class="glass rounded-2xl p-5">
+
+<i data-lucide="brain" class="text-teal-300"></i>
+
+<h3 class="font-bold text-lg mt-3">
+AI Intelligence
+</h3>
+
+<p class="text-slate-300 text-sm mt-2">
+Use predictive models to estimate future AQI.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="glass rounded-3xl p-8 floating">
+
+<div class="flex items-center gap-4">
+
+<div class="w-14 h-14 rounded-2xl bg-teal-500/20 flex items-center justify-center">
+
+<i data-lucide="brain-circuit"
+class="w-8 h-8 text-teal-300">
+</i>
+
+</div>
+
+<div>
+
+<p class="text-sm text-slate-300">
+AI Prediction Engine
+</p>
+
+<h3 class="text-2xl font-bold">
+Ready to Predict
+</h3>
+
+</div>
+
+</div>
+
+
+<div class="mt-8 space-y-5">
+
+<div>
+
+<div class="flex justify-between text-sm mb-2">
+
+<span>
+PM2.5
+</span>
+
+<span>
+32
+</span>
+
+</div>
+
+<div class="h-2 bg-white/10 rounded-full">
+<div class="h-2 bg-teal-400 rounded-full w-[62%]"></div>
+</div>
+
+</div>
+
+
+<div>
+
+<div class="flex justify-between text-sm mb-2">
+
+<span>
+PM10
+</span>
+
+<span>
+58
+</span>
+
+</div>
+
+<div class="h-2 bg-white/10 rounded-full">
+<div class="h-2 bg-sky-400 rounded-full w-[72%]"></div>
+</div>
+
+</div>
+
+
+<div>
+
+<div class="flex justify-between text-sm mb-2">
+
+<span>
+NO₂
+</span>
+
+<span>
+41
+</span>
+
+</div>
+
+<div class="h-2 bg-white/10 rounded-full">
+<div class="h-2 bg-green-400 rounded-full w-[48%]"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="mt-8 bg-white/10 rounded-2xl p-5">
+
+<p class="text-sm text-slate-300">
+Predicted AQI
+</p>
+
+<p class="text-5xl font-bold mt-2">
+78
+</p>
+
+<span class="inline-block mt-3 px-3 py-1 rounded-full bg-yellow-400/20 text-yellow-300 text-sm">
+Moderate
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="prediction"
+class="py-24 bg-white">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<div class="text-center max-w-3xl mx-auto">
+
+<span class="text-teal-700 font-semibold">
+AI PREDICTION CENTRE
+</span>
+
+<h2 class="text-4xl font-bold mt-4">
+Predict Future Air Quality
+</h2>
+
+<p class="text-slate-600 mt-4">
+Adjust pollutant conditions and estimate a future AQI value using the prediction engine.
+</p>
+
+</div>
+
+
+<div class="grid lg:grid-cols-2 gap-10 mt-14">
+
+
+<div class="bg-slate-50 rounded-3xl p-8">
+
+<h3 class="text-2xl font-bold">
+Environmental Inputs
+</h3>
+
+<p class="text-slate-500 mt-2">
+Adjust the pollutant levels.
+</p>
+
+
+<div class="mt-8 space-y-7">
+
+
+<div>
+
+<div class="flex justify-between">
+
+<label class="font-semibold">
+PM2.5
+</label>
+
+<span id="pm25Value"
+class="font-bold text-teal-700">
+32
+</span>
+
+</div>
+
+<input
+id="pm25"
+type="range"
+min="0"
+max="300"
+value="32"
+class="w-full mt-3">
+
+</div>
+
+
+<div>
+
+<div class="flex justify-between">
+
+<label class="font-semibold">
+PM10
+</label>
+
+<span id="pm10Value"
+class="font-bold text-teal-700">
+58
+</span>
+
+</div>
+
+<input
+id="pm10"
+type="range"
+min="0"
+max="400"
+value="58"
+class="w-full mt-3">
+
+</div>
+
+
+<div>
+
+<div class="flex justify-between">
+
+<label class="font-semibold">
+NO₂
+</label>
+
+<span id="no2Value"
+class="font-bold text-teal-700">
+41
+</span>
+
+</div>
+
+<input
+id="no2"
+type="range"
+min="0"
+max="250"
+value="41"
+class="w-full mt-3">
+
+</div>
+
+
+<div>
+
+<div class="flex justify-between">
+
+<label class="font-semibold">
+SO₂
+</label>
+
+<span id="so2Value"
+class="font-bold text-teal-700">
+20
+</span>
+
+</div>
+
+<input
+id="so2"
+type="range"
+min="0"
+max="200"
+value="20"
+class="w-full mt-3">
+
+</div>
+
+
+<div>
+
+<div class="flex justify-between">
+
+<label class="font-semibold">
+O₃
+</label>
+
+<span id="o3Value"
+class="font-bold text-teal-700">
+30
+</span>
+
+</div>
+
+<input
+id="o3"
+type="range"
+min="0"
+max="200"
+value="30"
+class="w-full mt-3">
+
+</div>
+
+
+<button
+onclick="predictAQI()"
+class="w-full mt-5 bg-teal-700 text-white py-3.5 rounded-xl font-semibold hover:bg-teal-800 transition">
+
+Generate AI Prediction
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="bg-slate-950 rounded-3xl p-8 text-white">
+
+<div class="flex items-center justify-between">
+
+<div>
+
+<p class="text-slate-400 text-sm">
+Prediction Result
+</p>
+
+<h3 class="text-3xl font-bold mt-2">
+AI Air Quality Analysis
+</h3>
+
+</div>
+
+<div class="w-14 h-14 rounded-2xl bg-teal-500/20 flex items-center justify-center">
+
+<i data-lucide="brain"
+class="text-teal-300">
+</i>
+
+</div>
+
+</div>
+
+
+<div class="mt-10 grid sm:grid-cols-2 gap-6">
+
+
+<div class="bg-white/5 rounded-2xl p-6">
+
+<p class="text-slate-400">
+Predicted AQI
+</p>
+
+<p id="predictedAQI"
+class="text-6xl font-bold mt-3">
+72
+</p>
+
+<p class="text-slate-400 text-sm mt-2">
+Estimated continuous AQI value.
+</p>
+
+</div>
+
+
+<div class="bg-white/5 rounded-2xl p-6">
+
+<p class="text-slate-400">
+AQI Category
+</p>
+
+<div class="mt-4">
+
+<span id="predictedCategory"
+class="inline-flex px-5 py-2 rounded-full font-bold bg-yellow-100 text-yellow-700">
+
+Moderate
+
+</span>
+
+</div>
+
+<p id="predictionMessage"
+class="text-slate-400 text-sm mt-4">
+Air quality is moderate.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="mt-8 bg-white/5 rounded-2xl p-6">
+
+<h4 class="font-bold">
+How It Works
+</h4>
+
+<p class="text-slate-400 text-sm mt-3 leading-relaxed">
+
+The prediction engine combines pollutant inputs to estimate a continuous AQI value and then classifies that value into an AQI category.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="py-24 bg-slate-950 text-white">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+
+<div>
+
+<span class="text-teal-400 font-semibold">
+DATA INSIGHTS
+</span>
+
+<h2 class="text-4xl font-bold mt-4">
+Understand AQI Trends
+</h2>
+
+<p class="text-slate-400 mt-5 leading-relaxed">
+
+Historical AQI patterns can help identify pollution changes and recurring environmental trends.
+
+</p>
+
+<div class="grid sm:grid-cols-3 gap-5 mt-8">
+
+<div class="bg-white/5 rounded-2xl p-5">
+
+<p class="text-slate-400 text-sm">
+Average AQI
+</p>
+
+<p class="text-2xl font-bold mt-2">
+84
+</p>
+
+</div>
+
+
+<div class="bg-white/5 rounded-2xl p-5">
+
+<p class="text-slate-400 text-sm">
+Peak AQI
+</p>
+
+<p class="text-2xl font-bold mt-2">
+148
+</p>
+
+</div>
+
+
+<div class="bg-white/5 rounded-2xl p-5">
+
+<p class="text-slate-400 text-sm">
+Trend
+</p>
+
+<p class="text-2xl font-bold text-green-400 mt-2">
+↓ 8%
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="bg-white/5 rounded-3xl p-8 border border-white/10">
+
+<p class="text-slate-400 text-sm">
+AQI — LAST 7 DAYS
+</p>
+
+<div class="h-64 mt-8 flex items-end gap-4">
+
+<div class="bg-teal-800 rounded-t-xl w-full h-[70%]"></div>
+<div class="bg-teal-700 rounded-t-xl w-full h-[82%]"></div>
+<div class="bg-teal-600 rounded-t-xl w-full h-[65%]"></div>
+<div class="bg-teal-500 rounded-t-xl w-full h-[75%]"></div>
+<div class="bg-green-500 rounded-t-xl w-full h-[52%]"></div>
+<div class="bg-green-400 rounded-t-xl w-full h-[60%]"></div>
+<div class="bg-teal-400 rounded-t-xl w-full h-[45%]"></div>
+
+</div>
+
+<div class="grid grid-cols-7 text-xs text-slate-500 mt-4 text-center">
+
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="tree-bg py-28 text-white">
+
+<div class="max-w-7xl mx-auto px-6 text-center">
+
+<span class="text-teal-300 font-semibold">
+SUSTAINABILITY
+</span>
+
+<h2 class="text-4xl lg:text-5xl font-bold mt-4">
+Cleaner Air. Smarter Decisions.
+</h2>
+
+<p class="max-w-3xl mx-auto text-slate-200 mt-6 text-lg leading-relaxed">
+
+Better air-quality intelligence can support communities, researchers and decision-makers in understanding pollution patterns and planning cleaner environments.
+
+</p>
+
+<div class="grid md:grid-cols-3 gap-6 mt-12">
+
+<div class="glass rounded-3xl p-7">
+
+<i data-lucide="leaf" class="w-8 h-8 text-green-300 mx-auto"></i>
+
+<h3 class="font-bold text-xl mt-4">
+Environmental Awareness
+</h3>
+
+<p class="text-slate-300 text-sm mt-3">
+Understand the factors contributing to air pollution.
+</p>
+
+</div>
+
+
+<div class="glass rounded-3xl p-7">
+
+<i data-lucide="bar-chart-3" class="w-8 h-8 text-teal-300 mx-auto"></i>
+
+<h3 class="font-bold text-xl mt-4">
+Data-Driven Planning
+</h3>
+
+<p class="text-slate-300 text-sm mt-3">
+Use historical and real-time information for better planning.
+</p>
+
+</div>
+
+
+<div class="glass rounded-3xl p-7">
+
+<i data-lucide="shield-check" class="w-8 h-8 text-sky-300 mx-auto"></i>
+
+<h3 class="font-bold text-xl mt-4">
+Health Awareness
+</h3>
+
+<p class="text-slate-300 text-sm mt-3">
+Understand changing air conditions and potential risks.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="articles" class="py-24 bg-slate-50">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<div class="text-center max-w-2xl mx-auto">
+
+<span class="text-teal-700 font-semibold">
+ARTICLES & INSIGHTS
+</span>
+
+<h2 class="text-4xl font-bold mt-4">
+Learn About Air Quality
+</h2>
+
+<p class="text-slate-600 mt-4">
+Explore important concepts behind AQI, pollution and prediction.
+</p>
+
+</div>
+
+
+<div class="grid md:grid-cols-3 gap-7 mt-12">
+
+
+<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover-card">
+
+<div class="h-48 bg-teal-700 flex items-center justify-center">
+
+<i data-lucide="wind" class="w-16 h-16 text-white/80"></i>
+
+</div>
+
+<div class="p-7">
+
+<span class="text-xs text-teal-700 font-bold">
+AIR QUALITY
+</span>
+
+<h3 class="text-xl font-bold mt-3">
+What Does AQI Really Tell Us?
+</h3>
+
+<p class="text-slate-600 mt-3 text-sm leading-relaxed">
+
+AQI converts information about multiple pollutants into an easier-to-understand indicator of air quality.
+
+</p>
+
+</div>
+
+</article>
+
+
+<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover-card">
+
+<div class="h-48 bg-sky-700 flex items-center justify-center">
+
+<i data-lucide="brain" class="w-16 h-16 text-white/80"></i>
+
+</div>
+
+<div class="p-7">
+
+<span class="text-xs text-sky-700 font-bold">
+ARTIFICIAL INTELLIGENCE
+</span>
+
+<h3 class="text-xl font-bold mt-3">
+How AI Can Predict AQI
+</h3>
+
+<p class="text-slate-600 mt-3 text-sm leading-relaxed">
+
+Regression can estimate a future AQI value while classification can predict the corresponding AQI category.
+
+</p>
+
+</div>
+
+</article>
+
+
+<article class="bg-white rounded-3xl overflow-hidden shadow-sm hover-card">
+
+<div class="h-48 bg-green-700 flex items-center justify-center">
+
+<i data-lucide="leaf" class="w-16 h-16 text-white/80"></i>
+
+</div>
+
+<div class="p-7">
+
+<span class="text-xs text-green-700 font-bold">
+SUSTAINABILITY
+</span>
+
+<h3 class="text-xl font-bold mt-3">
+Why Air Quality Monitoring Matters
+</h3>
+
+<p class="text-slate-600 mt-3 text-sm leading-relaxed">
+
+Continuous monitoring helps communities understand pollution conditions and long-term environmental changes.
+
+</p>
+
+</div>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="about" class="py-24 bg-white">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<div class="text-center">
+
+<span class="text-teal-700 font-semibold">
+NARUMONITOR
+</span>
+
+<h2 class="text-4xl font-bold mt-4">
+Built For Smarter Air Intelligence
+</h2>
+
+</div>
+
+
+<div class="grid md:grid-cols-3 gap-7 mt-12">
+
+<div class="rounded-3xl bg-slate-50 p-7">
+
+<i data-lucide="activity" class="text-teal-700 w-8 h-8"></i>
+
+<h3 class="text-xl font-bold mt-5">
+Real-Time Monitoring
+</h3>
+
+<p class="text-slate-600 mt-3">
+Monitor current AQI and pollutant conditions through live environmental APIs.
+</p>
+
+</div>
+
+
+<div class="rounded-3xl bg-slate-50 p-7">
+
+<i data-lucide="brain-circuit" class="text-sky-700 w-8 h-8"></i>
+
+<h3 class="text-xl font-bold mt-5">
+AI Prediction
+</h3>
+
+<p class="text-slate-600 mt-3">
+Estimate future AQI values and classify air-quality conditions.
+</p>
+
+</div>
+
+
+<div class="rounded-3xl bg-slate-50 p-7">
+
+<i data-lucide="globe-2" class="text-green-700 w-8 h-8"></i>
+
+<h3 class="text-xl font-bold mt-5">
+Environmental Intelligence
+</h3>
+
+<p class="text-slate-600 mt-3">
+Combine weather, pollution and environmental information in one platform.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="bg-slate-950 py-20 text-white">
+
+    <div class="max-w-5xl mx-auto px-6 text-center">
+
+        <h2 class="text-4xl font-bold text-white">
+            Start Understanding Your Air Today
+        </h2>
+
+        <p class="text-slate-300 mt-5 text-lg">
+            Monitor current conditions and explore AI-based AQI prediction.
+        </p>
+
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+
+            <a href="#monitor"
+            class="px-7 py-3.5 rounded-full bg-sky-500 text-white font-bold hover:bg-sky-400 transition">
+
+                Explore Live AQI
+
+            </a>
+
+            <a href="#prediction"
+            class="px-7 py-3.5 rounded-full border-2 border-sky-400 text-sky-300 hover:bg-sky-400/10 transition">
+
+                Start AI Prediction
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="bg-slate-950 text-slate-400 py-10">
+
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+
+<div class="flex items-center gap-3">
+
+<div class="w-9 h-9 rounded-lg bg-teal-700 flex items-center justify-center">
+
+<i data-lucide="wind" class="w-5 h-5 text-white"></i>
+
+</div>
+
+<span class="text-white font-bold">
+NaruMonitor
+</span>
+
+</div>
+
+<p class="text-sm">
+© 2026 NaruMonitor · AI-Powered Air Intelligence
+</p>
+
+</div>
+
+</footer>
+
+
+<script>
+
+const OPENWEATHER_API_KEY =
+"bbb64e30c3aee2de52253fd1f1b49b75";
+
+const OPENAQ_API_KEY =
+"37b857ad20abe35d1394e41633362966ed41fd28a89b8b84f1535e137a0ca456";
+
+
+function setText(id,value){
+
+const element=document.getElementById(id);
+
+if(element){
+element.textContent=value;
+}
+
+}
+
+
+function validNumber(value){
+
+return typeof value==="number" &&
+Number.isFinite(value) &&
+value!==-999 &&
+value!==-9999;
+
+}
+
+
+function getAQICategory(aqi){
+
+if(aqi<=50){
+return "Good";
+}
+
+if(aqi<=100){
+return "Moderate";
+}
+
+if(aqi<=150){
+return "Unhealthy for Sensitive Groups";
+}
+
+if(aqi<=200){
+return "Unhealthy";
+}
+
+if(aqi<=300){
+return "Very Unhealthy";
+}
+
+return "Hazardous";
+
+}
+
+
+function updateLiveAQI(aqi){
+
+if(!validNumber(aqi)){
+return;
+}
+
+aqi=Math.round(
+Math.max(
+0,
+Math.min(500,aqi)
+)
+);
+
+setText("liveAQI",aqi);
+
+setText(
+"liveCategory",
+getAQICategory(aqi)
+);
+
+const marker=document.getElementById("aqiMarker");
+
+if(marker){
+
+marker.style.left=
+Math.min(
+100,
+(aqi/300)*100
+)+"%";
+
+}
+
+}
+
+
+async function geocodeCity(city){
+
+const url=
+"https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q="
++
+encodeURIComponent(city);
+
+const response=
+await fetch(
+url,
+{
+headers:{
+"Accept-Language":"en"
+}
+}
+);
+
+if(!response.ok){
+
+throw new Error(
+"Nominatim request failed"
+);
+
+}
+
+const data=
+await response.json();
+
+if(!data.length){
+
+throw new Error(
+"City not found"
+);
+
+}
+
+return{
+
+lat:Number(data[0].lat),
+
+lon:Number(data[0].lon),
+
+name:data[0].display_name
+
+};
+
+}
+
+
+async function getOpenWeather(lat,lon){
+
+if(
+!OPENWEATHER_API_KEY ||
+OPENWEATHER_API_KEY.startsWith("YOUR_")
+){
+
+throw new Error(
+"OpenWeather API key missing"
+);
+
+}
+
+const url=
+`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`;
+
+const response=
+await fetch(url);
+
+if(!response.ok){
+
+throw new Error(
+"OpenWeather HTTP "+response.status
+);
+
+}
+
+return response.json();
+
+}
+
+
+async function getOpenAQ(lat,lon){
+
+if(
+!OPENAQ_API_KEY ||
+OPENAQ_API_KEY.startsWith("YOUR_")
+){
+
+throw new Error(
+"OpenAQ API key missing"
+);
+
+}
+
+const locationURL=
+`https://api.openaq.org/v3/locations?coordinates=${lat},${lon}&radius=25000&limit=10`;
+
+const response=
+await fetch(
+locationURL,
+{
+headers:{
+"X-API-Key":OPENAQ_API_KEY
+}
+}
+);
+
+if(!response.ok){
+
+throw new Error(
+"OpenAQ locations HTTP "+
+response.status
+);
+
+}
+
+const data=
+await response.json();
+
+const locations=
+(data.results||[])
+.filter(
+location=>location&&location.id
+)
+.sort(
+(a,b)=>{
+
+const ad=
+(a.coordinates?.latitude-lat)**2+
+(a.coordinates?.longitude-lon)**2;
+
+const bd=
+(b.coordinates?.latitude-lat)**2+
+(b.coordinates?.longitude-lon)**2;
+
+return ad-bd;
+
+}
+);
+
+
+for(
+const location of locations
+){
+
+const latestURL=
+`https://api.openaq.org/v3/locations/${location.id}/latest?limit=100`;
+
+const latestResponse=
+await fetch(
+latestURL,
+{
+headers:{
+"X-API-Key":OPENAQ_API_KEY
+}
+}
+);
+
+if(!latestResponse.ok){
+continue;
+}
+
+const latest=
+await latestResponse.json();
+
+const measurements=
+latest.results||[];
+
+const sensorMap=
+[...(location.sensors||[])]
+.reduce(
+(map,sensor)=>{
+
+map[sensor.id]=
+sensor.parameter?.name?.toLowerCase();
+
+return map;
+
+},
+{}
+);
+
+const values={};
+
+for(
+const measurement of measurements
+){
+
+const parameterName=
+(
+sensorMap[
+measurement.sensorsId
+]||""
+).toLowerCase();
+
+if(
+validNumber(measurement.value)
+){
+
+values[parameterName]=
+measurement.value;
+
+}
+
+}
+
+if(
+Object.keys(values).length
+){
+
+return{
+location:location,
+values:values
+};
+
+}
+
+}
+
+return null;
+
+}
+
+
+async function getOpenMeteo(lat,lon){
+
+const url=
+`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=us_aqi,pm2_5,pm10,nitrogen_dioxide,sulphur_dioxide,ozone&forecast_days=7&timezone=auto`;
+
+const response=
+await fetch(url);
+
+if(!response.ok){
+
+throw new Error(
+"Open-Meteo HTTP "+
+response.status
+);
+
+}
+
+return response.json();
+
+}
+
+
+function formatNASADate(date){
+
+return date
+.toISOString()
+.slice(0,10)
+.replaceAll("-","");
+
+}
+
+
+async function getNASA(lat,lon){
+
+const endDate=
+new Date();
+
+endDate.setUTCDate(
+endDate.getUTCDate()-2
+);
+
+const startDate=
+new Date(endDate);
+
+startDate.setUTCDate(
+startDate.getUTCDate()-7
+);
+
+const url=
+`https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M,RH2M,WS2M&community=RE&longitude=${lon}&latitude=${lat}&start=${formatNASADate(startDate)}&end=${formatNASADate(endDate)}&format=JSON`;
+
+const response=
+await fetch(url);
+
+if(!response.ok){
+
+throw new Error(
+"NASA POWER HTTP "+
+response.status
+);
+
+}
+
+return response.json();
+
+}
+
+
+function latestValid(series){
+
+if(!series){
+return null;
+}
+
+const keys=
+Object.keys(series)
+.sort()
+.reverse();
+
+for(
+const key of keys
+){
+
+const value=
+Number(series[key]);
+
+if(
+validNumber(value)
+){
+
+return value;
+
+}
+
+}
+
+return null;
+
+}
+
+
+async function loadLiveAPIs(){
+
+const city=
+document
+.getElementById("cityInput")
+?.value
+.trim()
+||
+"New Delhi";
+
+
+setText(
+"apiStatus",
+"Loading live data for "+city+"..."
+);
+
+
+try{
+
+const place=
+await geocodeCity(city);
+
+
+const[
+weather,
+airQuality,
+forecast,
+nasa
+]=
+await Promise.allSettled(
+[
+getOpenWeather(
+place.lat,
+place.lon
+),
+
+getOpenAQ(
+place.lat,
+place.lon
+),
+
+getOpenMeteo(
+place.lat,
+place.lon
+),
+
+getNASA(
+place.lat,
+place.lon
+)
+]
+);
+
+
+if(
+weather.status==="fulfilled"
+){
+
+setText(
+"weatherTemp",
+Math.round(
+weather.value.main.temp
+)+" °C"
+);
+
+setText(
+"weatherHumidity",
+weather.value.main.humidity+
+" %"
+);
+
+setText(
+"weatherWind",
+(
+weather.value.wind.speed*3.6
+).toFixed(1)+
+" km/h"
+);
+
+}
+else{
+
+setText(
+"weatherTemp",
+"Unavailable"
+);
+
+setText(
+"weatherHumidity",
+"Unavailable"
+);
+
+setText(
+"weatherWind",
+"Unavailable"
+);
+
+}
+
+
+if(
+airQuality.status==="fulfilled" &&
+airQuality.value
+){
+
+const values=
+airQuality.value.values||{};
+
+
+function findPollutant(names){
+
+for(
+const name of names
+){
+
+if(
+validNumber(values[name])
+){
+
+return values[name];
+
+}
+
+}
+
+return null;
+
+}
+
+
+const pm25=
+findPollutant(
+[
+"pm25",
+"pm2.5"
+]
+);
+
+
+const pm10=
+findPollutant(
+[
+"pm10"
+]
+);
+
+
+const no2=
+findPollutant(
+[
+"no2",
+"nitrogen dioxide"
+]
+);
+
+
+if(
+pm25!==null
+){
+
+setText(
+"livePM25",
+Number(pm25).toFixed(1)
+);
+
+setText(
+"cardPM25",
+Number(pm25).toFixed(1)+
+" µg/m³"
+);
+
+}
+
+
+if(
+pm10!==null
+){
+
+setText(
+"livePM10",
+Number(pm10).toFixed(1)
+);
+
+setText(
+"cardPM10",
+Number(pm10).toFixed(1)+
+" µg/m³"
+);
+
+}
+
+
+if(
+no2!==null
+){
+
+setText(
+"liveNO2",
+Number(no2).toFixed(1)
+);
+
+setText(
+"cardNO2",
+Number(no2).toFixed(1)+
+" µg/m³"
+);
+
+}
+
+}
+
+
+if(
+forecast.status==="fulfilled"
+){
+
+const hourly=
+forecast.value.hourly||{};
+
+const aqiValues=
+hourly.us_aqi||[];
+
+let currentAQI=null;
+
+for(
+let i=0;
+i<aqiValues.length;
+i++
+){
+
+if(
+validNumber(
+Number(aqiValues[i])
+)
+){
+
+currentAQI=
+Number(aqiValues[i]);
+
+break;
+
+}
+
+}
+
+
+if(
+currentAQI!==null
+){
+
+updateLiveAQI(
+currentAQI
+);
+
+}
+
+}
+
+
+if(
+nasa.status==="fulfilled"
+){
+
+const parameters=
+nasa.value
+.properties
+?.parameter||{};
+
+
+const temperature=
+latestValid(
+parameters.T2M
+);
+
+
+const humidity=
+latestValid(
+parameters.RH2M
+);
+
+
+const wind=
+latestValid(
+parameters.WS2M
+);
+
+
+setText(
+"nasaData",
+temperature!==null
+?
+temperature.toFixed(1)+" °C"
+:
+"No recent data"
+);
+
+
+if(
+humidity!==null
+){
+
+setText(
+"weatherHumidity",
+humidity.toFixed(0)+" %"
+);
+
+}
+
+
+if(
+wind!==null
+){
+
+setText(
+"weatherWind",
+wind.toFixed(1)+" m/s"
+);
+
+}
+
+}
+else{
+
+setText(
+"nasaData",
+"No recent data"
+);
+
+}
+
+
+setText(
+"apiStatus",
+"Live data loaded: "+
+place.name.split(",")[0]
+);
+
+}
+catch(error){
+
+setText(
+"apiStatus",
+"API error: "+
+error.message
+);
+
+console.error(error);
+
+}
+
+}
+
+
+const sliders=[
+
+["pm25","pm25Value"],
+
+["pm10","pm10Value"],
+
+["no2","no2Value"],
+
+["so2","so2Value"],
+
+["o3","o3Value"]
+
+];
+
+
+sliders.forEach(
+function(item){
+
+const slider=
+document.getElementById(
+item[0]
+);
+
+const value=
+document.getElementById(
+item[1]
+);
+
+slider.addEventListener(
+"input",
+function(){
+
+value.textContent=
+slider.value;
+
+}
+);
+
+}
+);
+
+
+function predictAQI(){
+
+const pm25=
+Number(
+document.getElementById("pm25").value
+);
+
+const pm10=
+Number(
+document.getElementById("pm10").value
+);
+
+const no2=
+Number(
+document.getElementById("no2").value
+);
+
+const so2=
+Number(
+document.getElementById("so2").value
+);
+
+const o3=
+Number(
+document.getElementById("o3").value
+);
+
+
+let predictedAQI=
+
+(pm25*0.9)+
+(pm10*0.25)+
+(no2*0.18)+
+(so2*0.08)+
+(o3*0.10);
+
+
+predictedAQI=
+Math.round(
+Math.max(
+0,
+Math.min(
+500,
+predictedAQI
+)
+)
+);
+
+
+let category="";
+let message="";
+let categoryClass="";
+
+
+if(
+predictedAQI<=50
+){
+
+category="Good";
+
+message=
+"Air quality is within the good range.";
+
+categoryClass=
+"bg-green-100 text-green-700";
+
+}
+
+else if(
+predictedAQI<=100
+){
+
+category="Moderate";
+
+message=
+"Air quality is moderate. Sensitive individuals may need to take care.";
+
+categoryClass=
+"bg-yellow-100 text-yellow-700";
+
+}
+
+else if(
+predictedAQI<=150
+){
+
+category=
+"Unhealthy for Sensitive Groups";
+
+message=
+"Sensitive groups may experience effects from the current conditions.";
+
+categoryClass=
+"bg-orange-100 text-orange-700";
+
+}
+
+else if(
+predictedAQI<=200
+){
+
+category="Unhealthy";
+
+message=
+"Air quality conditions indicate increased pollution.";
+
+categoryClass=
+"bg-red-100 text-red-700";
+
+}
+
+else if(
+predictedAQI<=300
+){
+
+category="Very Unhealthy";
+
+message=
+"Air quality is at a very unhealthy level.";
+
+categoryClass=
+"bg-purple-100 text-purple-700";
+
+}
+
+else{
+
+category="Hazardous";
+
+message=
+"Air quality is at a hazardous level.";
+
+categoryClass=
+"bg-red-200 text-red-900";
+
+}
+
+
+document.getElementById(
+"predictedAQI"
+).textContent=
+predictedAQI;
+
+
+const categoryElement=
+document.getElementById(
+"predictedCategory"
+);
+
+
+categoryElement.textContent=
+category;
+
+
+categoryElement.className=
+"inline-flex px-5 py-2 rounded-full font-bold "+
+categoryClass;
+
+
+document.getElementById(
+"predictionMessage"
+).textContent=
+message;
+
+}
+
+
+window.addEventListener(
+"load",
+function(){
+
+setTimeout(
+loadLiveAPIs,
+500
+);
+
+}
+);
+
+
+lucide.createIcons();
+
+</script>
+
+</body>
+</html>
