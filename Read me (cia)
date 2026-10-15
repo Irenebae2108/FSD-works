@@ -1,0 +1,92 @@
+# MapEase – Simple Navigation and Location Finder
+
+## 1. Project Overview
+
+MapEase is a simple, browser-based navigation website that helps users find their current location, search for destinations, and open walking directions. It uses JavaScript browser features and free OpenStreetMap services without requiring API keys.
+
+## 2. Objectives
+
+- Find the user's current location using geolocation.
+- Search for places and addresses.
+- Display locations on an interactive map.
+- Open walking directions between the current location and a destination.
+- Provide a simple, user-friendly interface.
+
+## 3. Technologies Used
+
+- **HTML5:** Structures the webpage.
+- **CSS3:** Styles the interface and buttons.
+- **JavaScript:** Implements location detection, destination search, and navigation.
+- **Geolocation API:** Retrieves the user's current coordinates with permission.
+- **Leaflet.js:** Displays the interactive map and location markers.
+- **OpenStreetMap:** Provides free map tiles.
+- **Nominatim API:** Searches for locations using place names and addresses.
+- **OpenStreetMap Directions:** Opens the walking route planner.
+
+## 4. Features
+
+### Find My Location
+Uses the browser's Geolocation API to obtain the user's latitude and longitude and display their position on the map.
+
+### Destination Search
+Allows users to enter a place name or address. Nominatim searches for the destination and displays a marker on the map.
+
+### Interactive Map
+Users can zoom in, zoom out, and explore locations on the map.
+
+### Walking Directions
+Opens OpenStreetMap's directions page with the user's current coordinates and selected destination.
+
+### API-Key-Free Setup
+The project does not require users to register for or configure API keys. It uses public services, which remain subject to their usage policies and availability.
+
+## 5. How to Run the Project
+
+1. Create a file named `MapEase.html`.
+2. Copy the project HTML, CSS, and JavaScript code into the file.
+3. Open the file using a web browser, or run it through VS Code Live Server.
+4. Allow location permission when prompted.
+5. Click **Find My Location**.
+6. Enter a destination and click **Search**.
+7. Click **Walking Directions** to view the route in a new tab.
+
+## 6. APIs and Services
+
+| API or Service | Purpose |
+|---|---|
+| Browser Geolocation API | Gets the current location |
+| Nominatim | Searches for places and addresses |
+| Leaflet.js | Displays the interactive map |
+| OpenStreetMap | Supplies map data and tiles |
+| OpenStreetMap Directions | Opens walking directions |
+
+## 7. JavaScript Concepts Used
+
+- Variables and constants
+- Functions and event handling
+- Conditional statements
+- Asynchronous JavaScript using `async` and `await`
+- Fetch API for HTTP requests
+- DOM manipulation
+- Error handling using `try...catch`
+- Browser Geolocation API
+
+## 8. Limitations
+
+- An internet connection is required for map tiles and online search.
+- Users must grant location permission to find their current position.
+- Public services may have usage limits or temporary availability issues.
+- Walking directions open on the OpenStreetMap website rather than being drawn directly on the MapEase map.
+- The application does not store location history or provide live traffic information.
+
+## 9. Future Enhancements
+
+- Display walking routes directly on the map.
+- Add nearby hospitals, restaurants, ATMs, and other essential services.
+- Provide route distance and estimated travel time.
+- Add accessibility information for wheelchair users.
+- Improve mobile responsiveness and interface design.
+
+## 10. Conclusion
+
+MapEase demonstrates how HTML, CSS, and JavaScript can be combined with free
