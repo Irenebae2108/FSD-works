@@ -1,0 +1,1055 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MapEase location search, nearby services and walking directions.">
+  <title>MapEase | Everywhere, for everyone</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    #map {
+      height: 500px;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .service-chip[aria-pressed="true"] {
+      background: #0e9f9a;
+      color: white;
+      border-color: #0e9f9a;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: 3px solid #0e9f9a40;
+      border-color: #0e9f9a;
+    }
+
+    @media (max-width: 640px) {
+      #map { height: 380px; }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+<header class="sticky top-0 z-50 border-b bg-white/95 shadow-sm">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between p-4">
+    <a href="#" class="flex items-center gap-3">
+      <span class="rounded-xl bg-teal-600 p-3 text-white">
+        <i data-lucide="map-pinned"></i>
+      </span>
+      <span>
+        <strong class="text-2xl">MapEase<span class="text-teal-600">.</span></strong>
+        <span class="block text-xs text-teal-700">
+          UBIQUE, OMNIBUS · Everywhere, for everyone
+        </span>
+      </span>
+    </a>
+    <a href="#report" class="rounded-xl bg-slate-900 px-4 py-2 text-sm text-white">
+      Report an issue
+    </a>
+  </nav>
+</header>
+
+<main>
+  <section class="bg-gradient-to-br from-emerald-100 via-violet-50 to-orange-100">
+    <div class="mx-auto max-w-7xl px-5 py-16">
+      <p class="font-bold uppercase tracking-widest text-teal-700">
+        UBIQUE, OMNIBUS
+      </p>
+      <h1 class="mt-4 text-4xl font-black leading-tight md:text-6xl">
+        Everywhere to go.<br>
+        <span class="text-teal-700">A map for everyone.</span>
+      </h1>
+      <p class="mt-5 max-w-2xl leading-7 text-slate-600">
+        Search for places, discover nearby essential services and plan
+        walking routes. Explore available accessibility information
+        without assuming that missing data means a place is accessible.
+      </p>
+
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="#explore" class="rounded-xl bg-teal-700 px-5 py-3 font-bold text-white">
+          Explore the map
+        </a>
+        <a href="#report" class="rounded-xl border border-slate-300 bg-white px-5 py-3 font-bold">
+          Report a map issue
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="explore" class="mx-auto max-w-7xl px-4 py-10">
+    <h2 class="text-3xl font-black">Explore the map</h2>
+    <p class="mt-2 text-slate-600">
+      Search a location, find nearby services or plan a walking route.
+    </p>
+
+    <div class="mt-6 grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
+
+      <aside class="space-y-5">
+
+        <!-- LOCATION SEARCH -->
+        <div class="rounded-2xl bg-white p-5 shadow-md">
+          <h3 class="mb-4 text-xl font-bold">Location search</h3>
+
+          <form id="searchForm">
+            <label for="locationQuery" class="mb-2 block text-sm font-semibold">
+              Address or landmark
+            </label>
+            <input id="locationQuery" required minlength="3" maxlength="180"
+              placeholder="e.g. Cubbon Park, Bengaluru"
+              class="w-full rounded-xl border p-3">
+
+            <button id="searchButton" type="submit"
+              class="mt-3 w-full rounded-xl bg-teal-700 p-3 font-bold text-white">
+              Search location
+            </button>
+          </form>
+
+          <div id="searchStatus" class="mt-3 hidden rounded-xl p-3 text-sm"
+               role="status" aria-live="polite"></div>
+          <div id="searchResults" class="mt-3 space-y-2"></div>
+
+          <button id="locateButton" type="button"
+            class="mt-3 w-full rounded-xl border border-teal-700 p-3 font-semibold text-teal-700">
+            Use my current location
+          </button>
+        </div>
+
+        <!-- NEARBY ESSENTIALS -->
+        <div class="rounded-2xl bg-white p-5 shadow-md">
+          <h3 class="mb-4 text-xl font-bold">Nearby essentials</h3>
+
+          <div id="categoryFilters" class="flex flex-wrap gap-2">
+            <button type="button" data-category="all" aria-pressed="true"
+              class="service-chip rounded-full border px-3 py-2 text-sm">
+              All essentials
+            </button>
+            <button type="button" data-category="hospital" aria-pressed="false"
+              class="service-chip rounded-full border px-3 py-2 text-sm">
+              🏥 Hospitals
+            </button>
+            <button type="button" data-category="pharmacy" aria-pressed="false"
+              class="service-chip rounded-full border px-3 py-2 text-sm">
+              💊 Pharmacies
+            </button>
+            <button type="button" data-category="supermarket" aria-pressed="false"
+              class="service-chip rounded-full border px-3 py-2 text-sm">
+              🛒 Supermarkets
+            </button>
+            <button type="button" data-category="police" aria-pressed="false"
+              class="service-chip rounded-full border px-3 py-2 text-sm">
+              🚓 Police
+            </button>
+            <button type="button" data-category="fire_station" aria-pressed="false"
+              class="service-chip rounded-full border px-3 py-2 text-sm">
+              🚒 Fire stations
+            </button>
+          </div>
+
+          <button id="nearbyButton" type="button" disabled
+            class="mt-4 w-full rounded-xl bg-teal-700 p-3 font-bold text-white disabled:opacity-50">
+            Find nearby places
+          </button>
+
+          <div id="placesStatus" class="mt-3 hidden rounded-xl p-3 text-sm"
+               role="status" aria-live="polite"></div>
+          <div id="placesList" class="mt-3 max-h-80 space-y-2 overflow-y-auto"></div>
+        </div>
+
+        <!-- WALKING DIRECTIONS -->
+        <div class="rounded-2xl bg-white p-5 shadow-md">
+          <h3 class="mb-4 text-xl font-bold">Walking directions</h3>
+
+          <form id="routeForm" class="space-y-3">
+            <div>
+              <label for="routeStart" class="mb-1 block text-sm font-semibold">
+                Starting point
+              </label>
+              <input id="routeStart" required minlength="3" maxlength="180"
+                placeholder="Starting address"
+                class="w-full rounded-xl border p-3">
+            </div>
+
+            <div>
+              <label for="routeEnd" class="mb-1 block text-sm font-semibold">
+                Destination
+              </label>
+              <input id="routeEnd" required minlength="3" maxlength="180"
+                placeholder="Destination address"
+                class="w-full rounded-xl border p-3">
+            </div>
+
+            <button id="routeButton" type="submit"
+              class="w-full rounded-xl bg-slate-900 p-3 font-bold text-white">
+              Get walking route
+            </button>
+          </form>
+
+          <div id="routeStatus" class="mt-3 hidden rounded-xl p-3 text-sm"
+               role="status" aria-live="polite"></div>
+          <div id="routeSummary" class="mt-3 hidden rounded-xl bg-emerald-50 p-4"></div>
+
+          <p class="mt-3 text-xs leading-5 text-slate-500">
+            Walking directions require a valid OpenRouteService API key.
+          </p>
+        </div>
+      </aside>
+
+      <!-- INTERACTIVE MAP -->
+      <div class="min-w-0 overflow-hidden rounded-2xl bg-white shadow-md">
+        <div class="p-4">
+          <h3 class="font-bold">Interactive map</h3>
+          <p id="mapCaption" class="mt-1 text-sm text-slate-500">
+            Search a location to begin.
+          </p>
+          <p id="mapTileNotice" class="mt-2 hidden rounded-lg bg-amber-50 p-3 text-sm text-amber-900"></p>
+        </div>
+        <div id="map" aria-label="Interactive map"></div>
+        <p class="p-3 text-xs text-slate-500">
+          Map data © OpenStreetMap contributors · Map tiles © CARTO
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESSIBILITY INFORMATION -->
+  <section class="bg-white py-12">
+    <div class="mx-auto max-w-7xl px-4">
+      <h2 class="text-3xl font-black">Inclusive by design</h2>
+      <p class="mt-3 max-w-2xl leading-7 text-slate-600">
+        MapEase displays accessibility tags when the community has mapped
+        them. Unknown information is not treated as proof of accessibility.
+      </p>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <article class="rounded-2xl bg-emerald-50 p-5">
+          <i data-lucide="accessibility" class="text-teal-700"></i>
+          <h3 class="mt-3 font-bold">Wheelchair information</h3>
+          <p class="mt-2 text-sm">Check available wheelchair-access tags.</p>
+        </article>
+        <article class="rounded-2xl bg-orange-50 p-5">
+          <i data-lucide="footprints" class="text-orange-700"></i>
+          <h3 class="mt-3 font-bold">Steps and ramps</h3>
+          <p class="mt-2 text-sm">View mapped path details where available.</p>
+        </article>
+        <article class="rounded-2xl bg-violet-50 p-5">
+          <i data-lucide="eye" class="text-violet-700"></i>
+          <h3 class="mt-3 font-bold">Readable interface</h3>
+          <p class="mt-2 text-sm">Responsive controls and clear feedback.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT FORM -->
+  <section id="report" class="mx-auto max-w-7xl px-4 py-12">
+    <h2 class="text-3xl font-black">Report a map issue</h2>
+    <p class="mt-2 text-slate-600">
+      Report missing addresses, outdated routes or missing accessibility details.
+    </p>
+
+    <form id="reportForm" class="mt-6 max-w-2xl space-y-4 rounded-2xl bg-white p-6 shadow-md">
+      <div>
+        <label for="reportType" class="mb-1 block font-semibold">Issue type</label>
+        <select id="reportType" required class="w-full rounded-xl border p-3">
+          <option value="">Choose an issue</option>
+          <option>Missing address</option>
+          <option>Outdated or closed route</option>
+          <option>Missing essential service</option>
+          <option>Accessibility information</option>
+          <option>Incorrect map labels</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="reportLocation" class="mb-1 block font-semibold">Location</label>
+        <input id="reportLocation" required minlength="3" maxlength="180"
+          class="w-full rounded-xl border p-3" placeholder="Location or landmark">
+      </div>
+
+      <div>
+        <label for="reportDetails" class="mb-1 block font-semibold">Description</label>
+        <textarea id="reportDetails" required minlength="10" maxlength="600" rows="4"
+          class="w-full rounded-xl border p-3"
+          placeholder="Describe the issue..."></textarea>
+        <p id="charCount" class="text-right text-xs text-slate-500">0 / 600</p>
+      </div>
+
+      <button type="submit" class="rounded-xl bg-orange-500 px-5 py-3 font-bold text-white">
+        Validate report
+      </button>
+      <div id="reportStatus" class="hidden rounded-xl p-3 text-sm"
+           role="status" aria-live="polite"></div>
+      <pre id="reportPreview" class="hidden overflow-auto rounded-xl bg-slate-900 p-3 text-xs text-white"></pre>
+    </form>
+
+    <p class="mt-4 text-sm text-slate-500">
+      Prototype: reports are validated in your browser and are not sent to a server.
+    </p>
+  </section>
+</main>
+
+<footer class="border-t bg-white p-6 text-center text-sm text-slate-500">
+  © 2026 MapEase · Map data
+  <a class="underline" href="https://www.openstreetmap.org/copyright"
+     target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>
+</footer>
+
+<script>
+"use strict";
+
+// ==========================================
+// CONFIGURATION
+// ==========================================
+
+// Generate a NEW key at:
+// https://openrouteservice.org/dev/#/signup
+//
+// Replace the placeholder below with your new key.
+// Do not use the old key that was shared in chat.
+const ORS_API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjJmNzY3ZjM2NGU1YTQxY2Q5NzBmOTVjY2UzOWU4N2JmIiwiaCI6Im11cm11cjY0In0=";
+
+const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
+const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
+const ORS_URL =
+  "https://api.openrouteservice.org/v2/directions/foot-walking/geojson";
+
+// ==========================================
+// MAP SETUP
+// ==========================================
+
+const CARTO_API_KEY = "cb1_4l9y_1_dd0f978a17f3293c82f4c68b";
+
+const baseMap = L.tileLayer(
+  "https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png?key=" +
+    encodeURIComponent(CARTO_API_KEY),
+  {
+    maxZoom: 20,
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }
+).addTo(map);
+
+baseMap.on("tileerror", () => {
+  $("mapTileNotice").textContent =
+    "Map tiles could not load. Check your internet connection.";
+  $("mapTileNotice").classList.remove("hidden");
+});
+
+baseMap.on("tileload", () => {
+  $("mapTileNotice").classList.add("hidden");
+});
+
+const searchedLayer = L.layerGroup().addTo(map);
+const placesLayer = L.layerGroup().addTo(map);
+const routeLayer = L.layerGroup().addTo(map);
+
+let selectedLocation = null;
+let selectedCategory = "all";
+let placeCache = [];
+
+const $ = id => document.getElementById(id);
+
+if (window.lucide) {
+  window.lucide.createIcons();
+}
+
+// ==========================================
+// STATUS MESSAGES AND BUTTONS
+// ==========================================
+
+function showStatus(id, message, type = "info") {
+  const el = $(id);
+
+  el.className = "mt-3 rounded-xl p-3 text-sm";
+
+  const colors = {
+    info: "bg-slate-100 text-slate-800",
+    success: "bg-emerald-50 text-emerald-800",
+    warning: "bg-amber-50 text-amber-900",
+    error: "bg-red-50 text-red-800"
+  };
+
+  el.classList.add(...colors[type].split(" "));
+  el.textContent = message;
+}
+
+function hideStatus(id) {
+  $(id).classList.add("hidden");
+}
+
+function setLoading(id, loading, label) {
+  const button = $(id);
+
+  if (loading) {
+    if (!button.dataset.originalHtml) {
+      button.dataset.originalHtml = button.innerHTML;
+    }
+    button.disabled = true;
+    button.textContent = label;
+  } else {
+    button.innerHTML = button.dataset.originalHtml || button.textContent;
+
+    if (id === "nearbyButton") {
+      button.disabled = !selectedLocation;
+    } else {
+      button.disabled = false;
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  }
+}
+
+// ==========================================
+// FETCH AND API ERROR HANDLING
+// ==========================================
+
+async function fetchJson(url, options = {}) {
+  let response;
+
+  try {
+    response = await fetch(url, options);
+  } catch (error) {
+    throw new Error(
+      "Network error: could not reach the service. Check your internet connection and try again."
+    );
+  }
+
+  const rawText = await response.text();
+  let data = {};
+
+  try {
+    data = rawText ? JSON.parse(rawText) : {};
+  } catch {
+    data = {};
+  }
+
+  if (!response.ok) {
+    const apiMessage =
+      data?.error?.message ||
+      data?.error?.details ||
+      data?.message ||
+      data?.error ||
+      "";
+
+    if (response.status === 401 || response.status === 403) {
+      throw new Error(
+        "API authentication failed (HTTP " + response.status +
+        "). Generate a fresh OpenRouteService key and check that it is copied correctly."
+      );
+    }
+
+    if (response.status === 429) {
+      throw new Error(
+        "API request limit reached (HTTP 429). Wait and try again, or check your provider quota."
+      );
+    }
+
+    if (response.status === 400) {
+      throw new Error(
+        "The API rejected the request (HTTP 400). " +
+        String(apiMessage || "Check the addresses and request format.")
+      );
+    }
+
+    if (response.status >= 500) {
+      throw new Error(
+        "The map service is temporarily unavailable (HTTP " +
+        response.status + "). Please try again later."
+      );
+    }
+
+    throw new Error(
+      "API request failed (HTTP " + response.status + "). " +
+      String(apiMessage || "Please check your input and try again.")
+    );
+  }
+
+  if (!rawText) {
+    throw new Error("The service returned an empty response.");
+  }
+
+  try {
+    return JSON.parse(rawText);
+  } catch {
+    throw new Error("The service returned an unreadable response.");
+  }
+}
+
+// ==========================================
+// LOCATION SEARCH
+// ==========================================
+
+async function geocode(query) {
+  const url = new URL(NOMINATIM_URL);
+
+  url.search = new URLSearchParams({
+    q: query,
+    format: "jsonv2",
+    limit: "5",
+    addressdetails: "1"
+  }).toString();
+
+  const data = await fetchJson(url.toString(), {
+    headers: { Accept: "application/json" }
+  });
+
+  if (!Array.isArray(data)) {
+    throw new Error("Unexpected location-search response.");
+  }
+
+  return data.filter(place =>
+    Number.isFinite(Number(place.lat)) &&
+    Number.isFinite(Number(place.lon))
+  );
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function addSearchedLocation(place, label) {
+  const lat = Number(place.lat);
+  const lon = Number(place.lon);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    throw new Error("Invalid location coordinates.");
+  }
+
+  selectedLocation = { lat, lon, label };
+
+  searchedLayer.clearLayers();
+  placesLayer.clearLayers();
+  routeLayer.clearLayers();
+  placeCache = [];
+
+  L.marker([lat, lon])
+    .addTo(searchedLayer)
+    .bindPopup("<strong>" + escapeHtml(label) + "</strong>")
+    .openPopup();
+
+  map.setView([lat, lon], 15);
+
+  $("mapCaption").textContent = label;
+  $("nearbyButton").disabled = false;
+  $("placesList").innerHTML = "";
+  hideStatus("placesStatus");
+}
+
+$("searchForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const query = $("locationQuery").value.trim();
+
+  if (query.length < 3) {
+    showStatus("searchStatus", "Enter at least 3 characters.", "warning");
+    return;
+  }
+
+  setLoading("searchButton", true, "Searching...");
+  hideStatus("searchStatus");
+  $("searchResults").innerHTML = "";
+
+  try {
+    const results = await geocode(query);
+
+    if (!results.length) {
+      showStatus(
+        "searchStatus",
+        "No location found. Try adding the city or a nearby landmark.",
+        "warning"
+      );
+      return;
+    }
+
+    $("searchResults").innerHTML = results.map((place, index) => `
+      <button type="button" data-index="${index}"
+        class="block w-full rounded-xl border p-3 text-left hover:border-teal-600">
+        <strong class="block text-sm">
+          ${escapeHtml(place.name || place.display_name.split(",")[0])}
+        </strong>
+        <span class="mt-1 block text-xs text-slate-500">
+          ${escapeHtml(place.display_name)}
+        </span>
+      </button>
+    `).join("");
+
+    $("searchResults").dataset.results = JSON.stringify(results);
+
+    showStatus(
+      "searchStatus",
+      "Select the correct location from the results.",
+      "success"
+    );
+  } catch (error) {
+    showStatus("searchStatus", error.message, "error");
+  } finally {
+    setLoading("searchButton", false);
+  }
+});
+
+$("searchResults").addEventListener("click", event => {
+  const button = event.target.closest("[data-index]");
+  if (!button) return;
+
+  try {
+    const results = JSON.parse(
+      $("searchResults").dataset.results || "[]"
+    );
+
+    const place = results[Number(button.dataset.index)];
+    if (!place) throw new Error("Search again to select a location.");
+
+    const label = place.display_name;
+
+    addSearchedLocation(place, label);
+    $("routeStart").value = label;
+
+    showStatus("searchStatus", "Location selected.", "success");
+  } catch (error) {
+    showStatus("searchStatus", error.message, "error");
+  }
+});
+
+// ==========================================
+// CATEGORY FILTER
+// ==========================================
+
+$("categoryFilters").addEventListener("click", event => {
+  const button = event.target.closest("[data-category]");
+  if (!button) return;
+
+  selectedCategory = button.dataset.category;
+
+  document.querySelectorAll(".service-chip").forEach(chip => {
+    chip.setAttribute(
+      "aria-pressed",
+      String(chip.dataset.category === selectedCategory)
+    );
+  });
+
+  if (placeCache.length) renderPlaces(placeCache);
+});
+
+// ==========================================
+// NEARBY ESSENTIAL SERVICES
+// ==========================================
+
+function getCategory(tags) {
+  if (tags.amenity === "hospital") return "hospital";
+  if (tags.amenity === "pharmacy") return "pharmacy";
+  if (tags.shop === "supermarket") return "supermarket";
+  if (tags.amenity === "police") return "police";
+  if (tags.amenity === "fire_station") return "fire_station";
+  return "other";
+}
+
+const categoryLabels = {
+  hospital: "Hospital",
+  pharmacy: "Pharmacy",
+  supermarket: "Supermarket",
+  police: "Police station",
+  fire_station: "Fire station"
+};
+
+const categoryEmojis = {
+  hospital: "🏥",
+  pharmacy: "💊",
+  supermarket: "🛒",
+  police: "🚓",
+  fire_station: "🚒"
+};
+
+$("nearbyButton").addEventListener("click", async () => {
+  if (!selectedLocation) {
+    showStatus("placesStatus", "Search for a location first.", "warning");
+    return;
+  }
+
+  setLoading("nearbyButton", true, "Finding places...");
+  hideStatus("placesStatus");
+
+  try {
+    const { lat, lon } = selectedLocation;
+
+    const around = `(around:1500,${lat},${lon})`;
+
+    const query = `
+      [out:json][timeout:25];
+      (
+        node${around}["amenity"~"hospital|pharmacy|police|fire_station"];
+        way${around}["amenity"~"hospital|pharmacy|police|fire_station"];
+        relation${around}["amenity"~"hospital|pharmacy|police|fire_station"];
+        node${around}["shop"="supermarket"];
+        way${around}["shop"="supermarket"];
+        relation${around}["shop"="supermarket"];
+      );
+      out center tags;
+    `;
+
+    const data = await fetchJson(OVERPASS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        Accept: "application/json"
+      },
+      body: new URLSearchParams({ data: query })
+    });
+
+    if (!Array.isArray(data.elements)) {
+      throw new Error("The nearby-places service returned unexpected data.");
+    }
+
+    placeCache = data.elements.map(element => {
+      const tags = element.tags || {};
+      const category = getCategory(tags);
+
+      return {
+        id: element.type + "-" + element.id,
+        lat: Number(element.lat ?? element.center?.lat),
+        lon: Number(element.lon ?? element.center?.lon),
+        category,
+        name: tags.name || categoryLabels[category] || "Unnamed place",
+        wheelchair: tags.wheelchair || "Unknown",
+        ramp: tags.ramp || "Unknown",
+        steps: tags.step_count || "Unknown",
+        marker: null
+      };
+    }).filter(place =>
+      Number.isFinite(place.lat) &&
+      Number.isFinite(place.lon) &&
+      place.category !== "other"
+    );
+
+    if (!placeCache.length) {
+      $("placesList").innerHTML =
+        '<p class="rounded-xl border p-3 text-sm">No mapped services were found within 1.5 km. This does not prove that no services exist nearby.</p>';
+
+      showStatus("placesStatus", "No mapped results found.", "warning");
+    } else {
+      renderPlaces(placeCache);
+
+      showStatus(
+        "placesStatus",
+        placeCache.length + " mapped places found within approximately 1.5 km.",
+        "success"
+      );
+    }
+  } catch (error) {
+    showStatus("placesStatus", error.message, "error");
+  } finally {
+    setLoading("nearbyButton", false);
+  }
+});
+
+function renderPlaces(places) {
+  placesLayer.clearLayers();
+
+  const filtered = selectedCategory === "all"
+    ? places
+    : places.filter(place => place.category === selectedCategory);
+
+  if (!filtered.length) {
+    $("placesList").innerHTML =
+      '<p class="rounded-xl border p-3 text-sm">No results for this category.</p>';
+    return;
+  }
+
+  $("placesList").innerHTML = filtered.slice(0, 60).map(place => `
+    <button type="button" data-place-id="${escapeHtml(place.id)}"
+      class="block w-full rounded-xl border p-3 text-left hover:border-teal-600">
+      <strong class="text-sm">
+        ${categoryEmojis[place.category] || "📍"}
+        ${escapeHtml(place.name)}
+      </strong>
+      <span class="mt-1 block text-xs text-slate-500">
+        ${escapeHtml(categoryLabels[place.category] || "Place")}
+      </span>
+      <span class="mt-1 block text-xs text-slate-500">
+        Wheelchair access: ${escapeHtml(place.wheelchair)}
+      </span>
+    </button>
+  `).join("");
+
+  filtered.forEach(place => {
+    place.marker = L.marker([place.lat, place.lon])
+      .addTo(placesLayer)
+      .bindPopup(
+        "<strong>" + escapeHtml(place.name) + "</strong><br>" +
+        "Category: " + escapeHtml(categoryLabels[place.category]) +
+        "<br>Wheelchair access: " + escapeHtml(place.wheelchair) +
+        "<br>Ramps: " + escapeHtml(place.ramp) +
+        "<br>Steps: " + escapeHtml(place.steps)
+      );
+  });
+}
+
+$("placesList").addEventListener("click", event => {
+  const row = event.target.closest("[data-place-id]");
+  if (!row) return;
+
+  const place = placeCache.find(
+    item => item.id === row.dataset.placeId
+  );
+
+  if (!place) return;
+
+  map.setView([place.lat, place.lon], 17);
+  if (place.marker) place.marker.openPopup();
+});
+
+// ==========================================
+// WALKING DIRECTIONS
+// ==========================================
+
+$("routeForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const startQuery = $("routeStart").value.trim();
+  const endQuery = $("routeEnd").value.trim();
+
+  if (!startQuery || !endQuery) {
+    showStatus(
+      "routeStatus",
+      "Enter both a starting point and a destination.",
+      "warning"
+    );
+    return;
+  }
+
+  if (
+    !ORS_API_KEY ||
+    ORS_API_KEY === "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjJmNzY3ZjM2NGU1YTQxY2Q5NzBmOTVjY2UzOWU4N2JmIiwiaCI6Im11cm11cjY0In0="
+  ) {
+    showStatus(
+      "routeStatus",
+      "Please add your OpenRouteService API key in the CONFIGURATION section.",
+      "warning"
+    );
+    return;
+  }
+
+  setLoading("routeButton", true, "Planning route...");
+  hideStatus("routeStatus");
+  $("routeSummary").classList.add("hidden");
+
+  try {
+    const [starts, ends] = await Promise.all([
+      geocode(startQuery),
+      geocode(endQuery)
+    ]);
+
+    if (!starts.length || !ends.length) {
+      throw new Error(
+        "Could not find the starting point or destination. Try a fuller address."
+      );
+    }
+
+    const start = starts[0];
+    const end = ends[0];
+
+    const routeData = await fetchJson(ORS_URL, {
+      method: "POST",
+      headers: {
+        Authorization: ORS_API_KEY.trim(),
+        "Content-Type": "application/json",
+        Accept: "application/geo+json, application/json"
+      },
+      body: JSON.stringify({
+        coordinates: [
+          [Number(start.lon), Number(start.lat)],
+          [Number(end.lon), Number(end.lat)]
+        ],
+        instructions: true
+      })
+    });
+
+    const feature = routeData.features?.[0];
+    const coordinates = feature?.geometry?.coordinates;
+
+    if (!Array.isArray(coordinates) || coordinates.length < 2) {
+      throw new Error("No walking route was returned for these locations.");
+    }
+
+    const latLngs = coordinates.map(pair => [pair[1], pair[0]]);
+
+    routeLayer.clearLayers();
+
+    L.polyline(latLngs, {
+      color: "#6257d9",
+      weight: 6,
+      opacity: 0.9
+    }).addTo(routeLayer);
+
+    L.marker([Number(start.lat), Number(start.lon)])
+      .addTo(routeLayer)
+      .bindPopup("Starting point");
+
+    L.marker([Number(end.lat), Number(end.lon)])
+      .addTo(routeLayer)
+      .bindPopup("Destination");
+
+    map.fitBounds(L.latLngBounds(latLngs).pad(0.15));
+
+    const summary = feature.properties?.summary || {};
+    const distance = Number(summary.distance) / 1000;
+    const duration = Number(summary.duration) / 60;
+
+    $("routeSummary").innerHTML = `
+      <h4 class="font-bold text-emerald-800">Walking route ready!</h4>
+      <p class="mt-2">
+        Distance:
+        <strong>${Number.isFinite(distance) ? distance.toFixed(2) + " km" : "Unavailable"}</strong>
+      </p>
+      <p class="mt-2">
+        Estimated time:
+        <strong>${Number.isFinite(duration) ? Math.max(1, Math.round(duration)) + " minutes" : "Unavailable"}</strong>
+      </p>
+      <p class="mt-3 text-xs text-slate-600">
+        This is an estimate. Check local conditions and accessibility before travelling.
+      </p>
+    `;
+
+    $("routeSummary").classList.remove("hidden");
+
+    showStatus("routeStatus", "Walking route loaded successfully.", "success");
+  } catch (error) {
+    showStatus("routeStatus", error.message, "error");
+  } finally {
+    setLoading("routeButton", false);
+  }
+});
+
+// ==========================================
+// CURRENT LOCATION
+// ==========================================
+
+$("locateButton").addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    showStatus(
+      "searchStatus",
+      "Your browser does not support location access.",
+      "warning"
+    );
+    return;
+  }
+
+  showStatus(
+    "searchStatus",
+    "Waiting for location permission...",
+    "info"
+  );
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const place = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+      };
+
+      addSearchedLocation(place, "Your current location");
+      $("locationQuery").value = "Your current location";
+      $("routeStart").value = "Your current location";
+
+      showStatus(
+        "searchStatus",
+        "Your location is shown on the map.",
+        "success"
+      );
+    },
+    error => {
+      const messages = {
+        1: "Location permission denied. Enable it or search manually.",
+        2: "Your location could not be determined.",
+        3: "Location request timed out. Try again."
+      };
+
+      showStatus(
+        "searchStatus",
+        messages[error.code] || "Could not access your location.",
+        "error"
+      );
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 60000
+    }
+  );
+});
+
+// ==========================================
+// REPORT FORM AND INPUT EVENT
+// ==========================================
+
+$("reportDetails").addEventListener("input", event => {
+  $("charCount").textContent =
+    event.target.value.length + " / 600";
+});
+
+$("reportForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const report = {
+    type: $("reportType").value,
+    location: $("reportLocation").value.trim(),
+    details: $("reportDetails").value.trim(),
+    createdAt: new Date().toISOString(),
+    status: "Draft - not sent to a server"
+  };
+
+  if (
+    !report.type ||
+    report.location.length < 3 ||
+    report.details.length < 10
+  ) {
+    showStatus(
+      "reportStatus",
+      "Complete every required field. The description needs at least 10 characters.",
+      "warning"
+    );
+    return;
+  }
+
+  $("reportPreview").textContent = JSON.stringify(report, null, 2);
+  $("reportPreview").classList.remove("hidden");
+
+  showStatus(
+    "reportStatus",
+    "Report validated. It has not been sent to a server.",
+    "success"
+  );
+});
+
+// ==========================================
+// INITIAL STATE
+// ==========================================
+
+$("placesList").innerHTML =
+  '<p class="rounded-xl border p-3 text-sm text-slate-500">Search a location, then find nearby places.</p>';
+
+if (window.lucide) {
+  window.lucide.createIcons();
+}
+</script>
+</body>
+</html>
