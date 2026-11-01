@@ -1,0 +1,5 @@
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; }
+button, input, select { font: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #9be7cd; outline-offset: 2px; }
+::selection { background: #b9f2d9; color: #123f3e; }
